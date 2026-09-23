@@ -11,6 +11,7 @@ from api.mail_api import MailAPI
 from api.shop_api import ShopAPI
 from api.activity_api import ActivityAPI
 from config.settings import SHOP_ID
+from api.rank_api import RankAPI, RankType
 
 
 @pytest.mark.smoke
@@ -60,5 +61,13 @@ def test_smoke_all(game_client):
                 all_activities.extend(field_value)
     print(f"当前开启的活动共 {len(all_activities)} 个")
     assert len(all_activities) > 0, "没有任何活动开启"
+
+    # 6. 排行榜查询
+    print("\n============ 6. 排行榜查询 ============")
+    rank = RankAPI(game_client)
+    ranking_list, mine_rank, mine_score = rank.get_ranking_info(RankType.HERO_ALL)
+    print(f"战舰榜共 {len(ranking_list)} 名玩家，我的排名: {mine_rank}")
+    assert len(ranking_list) > 0, "排行榜为空"
+
 
     print("\n============ 冒烟测试全部通过 ============")
