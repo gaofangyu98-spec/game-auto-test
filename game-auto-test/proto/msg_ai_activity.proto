@@ -1,0 +1,1208 @@
+syntax = "proto3";
+package msg_ai_activity;
+import "msg_common.proto";
+import "enum_const.proto";
+option go_package = "./../../pb";
+
+message ai_activity_base {
+    int32 id          = 1;  // 冲榜id
+    int32 sub_type    = 2;  // 活动子类型，比如冲榜类活动，子类型就是冲榜类型
+    int64 start_time  = 3;  // 开始时间,毫秒
+    int64 end_time    = 4;  // 结束时间,毫秒
+    int64 reward_time = 5;  // 奖励开始领取时间,毫秒
+    int64 idx = 6;          // 自增 id，用于前端排序
+}
+
+message ai_activity_rank {
+    ai_activity_base base_info                      = 1;  // 排行榜基础配置信息
+    repeated msg_common.ai_activity_rank_info ranks = 3;  // 排行榜列表
+    int64 mine_score                                = 4;  // 我的得分
+    int32 mine_rank                                 = 5;  // 我的排名
+    bool gift_taked                                 = 6;  // 奖励是否已领取
+    int64 init_score                                = 7;  // 初始得分
+    bool day_reward_taked                           = 8;  // 每日奖励是否已领取
+}
+
+// 活动总列表
+message C2S_AI_ACTIVITY_LIST {
+}
+
+message S2C_AI_ACTIVITY_LIST {
+    repeated ai_activity_base ai_activity_rank_list             = 1;   // 冲榜列表
+    repeated ai_activity_base ai_activity_limit_recharge_list   = 2;   // 限时充值列表
+    repeated ai_activity_base ai_activity_limit_gift_list       = 3;   // 限时礼包列表
+    repeated ai_activity_base ai_activity_turntable_list        = 4;   // 转盘列表
+    repeated ai_activity_base ai_activity_turntable_dia_list    = 5;   // 钻石转盘列表
+    repeated ai_activity_base ai_activity_battlepass_list       = 6;   // 战令列表
+    repeated ai_activity_base ai_activity_battlepass_two_list   = 7;   // 节日战令列表
+    repeated ai_activity_base ai_activity_fund_list             = 8;   // 基金列表
+    repeated ai_activity_base ai_activity_daypass_list          = 9;   // 天数通行证列表
+    repeated ai_activity_base ai_activity_sign7day_list         = 10;  // 七日签到列表
+    repeated ai_activity_base ai_activity_recharge_double_list  = 11;  // 充值双倍列表
+    repeated ai_activity_base ai_activity_lucky_cat_list        = 12;  // 招财猫列表
+    repeated ai_activity_base ai_activity_limit_gift_cross_list = 13;  // 跨服特惠礼包列表
+    repeated ai_activity_base ai_activity_rank_cross_list       = 14;  // 跨服冲榜列表
+    repeated ai_activity_base ai_activity_snake_gift_list       = 15;  // 蛇形礼包列表
+    repeated ai_activity_base ai_activity_lucky_chess_list      = 16;  // 幸运棋牌列表
+    repeated ai_activity_base ai_activity_lucky_bag_list        = 17;  // 幸运福袋列表
+    repeated ai_activity_base aiActivityPyramidList             = 18;  // 金字塔
+    repeated ai_activity_base aiActivityHolidayList             = 19;  // 节日活动列表
+    repeated ai_activity_base aiActivityMinigameList            = 20; // 小游戏活动列表
+    repeated ai_activity_base ai_activity_tongle_gift_list    = 21;  // 同乐礼包列表
+    repeated ai_activity_base aiActivityRushGiftList            = 22;  // 冲榜礼包列表
+}
+
+// 活动内容变化时同步
+message S2C_AI_ACTIVITY_SYNC {
+}
+
+// 冲榜获取信息
+message C2S_AI_ACTIVITY_RANK_GET_INFO {
+    int32 id = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_RANK_GET_INFO {
+    ai_activity_rank ai_activity_rank_info = 1;  // 冲榜信息
+}
+
+// 冲榜领取奖励
+message C2S_AI_ACTIVITY_RANK_TAKE_REWARD {
+    int32 id = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_RANK_TAKE_REWARD {
+    int32 id                                   = 1;  // 活动id
+    enum_const.AI_ACTIVITY_RANK_TYPE rank_type = 2;  // 冲榜类型
+    bool gift_taked                            = 3;  // 奖励是否已领取
+}
+
+// 冲榜领取每日奖励
+message C2S_AI_ACTIVITY_RANK_TAKE_DAY_REWARD {
+    int32 id = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_RANK_TAKE_DAY_REWARD {
+    int32 id                                   = 1;  // 活动id
+    enum_const.AI_ACTIVITY_RANK_TYPE rank_type = 2;  // 冲榜类型
+    bool day_reward_taked                      = 3;  // 每日奖励是否已领取
+}
+
+message time_limit_recharge_info {
+    int32 id     = 1;  // 配表Id
+    int32 value  = 2;  // 值
+    int32 status = 3;  // 状态
+}
+
+enum AI_ACTIVITY_LIMIT_RECHARGE_TYPE {
+    NONE  = 0;  // 无
+    DAY   = 1;  // 每日充值
+    TOTAL = 2;  // 累计充值
+    TASK  = 3;  // 任务奖励
+}
+
+message ai_activity_limit_recharge_reward_list {
+    repeated int32 reward_indexs = 1;  // 充值奖励列表
+}
+
+// 请求活动数据
+message C2S_AI_ACTIVITY_LIMIT_RECHARGE_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LIMIT_RECHARGE_INFO {
+    map<int32, int32> amount_map                                        = 1;  // 充值金额
+    map<int32, ai_activity_limit_recharge_reward_list> reward_index_map = 2;  // 已领取奖励的index
+}
+
+// 请求领取奖励
+message C2S_AI_ACTIVITY_LIMIT_RECHARGE_GET_REWARD {
+    int32 id                             = 1;  // 活动id
+    int32 index                          = 2;  // 奖励index
+    AI_ACTIVITY_LIMIT_RECHARGE_TYPE type = 3;  // 类型
+}
+message S2C_AI_ACTIVITY_LIMIT_RECHARGE_GET_REWARD {
+}
+
+// 特惠礼包，限购礼包
+message C2S_AI_ACTIVITY_LIMIT_GIFT_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LIMIT_GIFT_INFO {
+    bool day_free_reward_status = 1;  // 是否领取每日免费奖励
+    map<int32, int32> buy_times = 2;  // 已经购买次数，key:index,value:次数
+}
+
+// 特惠礼包，限购礼包领取每日免费奖励
+message C2S_AI_ACTIVITY_LIMIT_GIFT_TAKE_FREE_REWARD {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LIMIT_GIFT_TAKE_FREE_REWARD {
+}
+// 转盘信息
+message C2S_AI_ACTIVITY_TURNTABLE_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_TURNTABLE_INFO {
+    map<int32, int32> infos                   = 1;  // k:格子index,v:剩余次数
+    repeated msg_common.reward_record records = 2;  // 抽到大奖的记录
+    int32 active_value                        = 3;  // 当前活跃值
+    repeated int32 active_reward_indexs       = 4;  // 活跃已领奖index
+}
+
+// 转盘抽奖
+message C2S_AI_ACTIVITY_TURNTABLE_DRAW {
+    int32 id        = 1;  // 活动id
+    int32 draw_type = 2;  // 抽奖类型 1 单次 2 一键
+}
+message S2C_AI_ACTIVITY_TURNTABLE_DRAW {
+    map<int32, int32> infos                   = 1;  // k:格子index,v:剩余次数
+    int32 active_value                        = 2;  // 当前活跃值
+    repeated int32 hit_indexs                 = 3;  // 所有转到的格子
+    repeated msg_common.reward_record records = 4;  // 抽到大奖的记录
+}
+
+// 转盘领取活跃奖励
+message C2S_AI_ACTIVITY_TURNTABLE_ACTIVE_REWARD {
+    int32 id    = 1;  // 活动id
+    int32 index = 2;  // 从 0 开始
+}
+message S2C_AI_ACTIVITY_TURNTABLE_ACTIVE_REWARD {
+    int32 active_value                  = 1;  // 当前活跃值
+    repeated int32 active_reward_indexs = 2;  // 活跃已领奖index
+}
+
+// 钻石转盘信息
+message C2S_AI_ACTIVITY_TURNTABLE_DIA_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_TURNTABLE_DIA_INFO {
+    map<int32, int32> infos                   = 1;  // k:格子index,v:剩余次数
+    repeated msg_common.reward_record records = 2;  // 抽到大奖的记录
+    int32 active_value                        = 3;  // 当前活跃值
+    repeated int32 active_reward_indexs       = 4;  // 活跃已领奖index
+}
+
+// 钻石转盘抽奖
+message C2S_AI_ACTIVITY_TURNTABLE_DIA_DRAW {
+    int32 id        = 1;  // 活动id
+    int32 draw_type = 2;  // 抽奖类型 1 单次 2 一键
+}
+message S2C_AI_ACTIVITY_TURNTABLE_DIA_DRAW {
+    map<int32, int32> infos                   = 1;  // k:格子index,v:剩余次数
+    int32 active_value                        = 2;  // 当前活跃值
+    repeated int32 hit_indexs                 = 3;  // 所有转到的格子
+    repeated msg_common.reward_record records = 4;  // 抽到大奖的记录
+}
+
+// 钻石转盘领取活跃奖励
+message C2S_AI_ACTIVITY_TURNTABLE_DIA_ACTIVE_REWARD {
+    int32 id    = 1;  // 活动id
+    int32 index = 2;  // 从 0 开始
+}
+message S2C_AI_ACTIVITY_TURNTABLE_DIA_ACTIVE_REWARD {
+    int32 active_value                  = 1;  // 当前活跃值
+    repeated int32 active_reward_indexs = 2;  // 活跃已领奖index
+}
+
+// 战令信息
+message C2S_AI_ACTIVITY_BATTLEPASS_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_INFO {
+    int32 level                  = 2;  // 当前等级
+    int32 exp                    = 3;  // 当前经验
+    repeated int32 reward_levels = 4;  // 奖励已领取的等级列表
+    int32 imp_reward_order_id    = 5;  // 当前领取进度orderId
+    bool recharged               = 6;  // 是否购买了礼包
+}
+
+// 战令领取等级奖励
+message C2S_AI_ACTIVITY_BATTLEPASS_LEVEL_REWARD {
+    int32 id              = 1;  // 活动id
+    repeated int32 levels = 2;  // 所有要领取的等级奖励 1个或者多个
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_LEVEL_REWARD {
+}
+
+// 战令领取大奖
+message C2S_AI_ACTIVITY_BATTLEPASS_IMP_REWARD {
+    int32 id       = 1;  // 活动id
+    int32 order_id = 2;  // 领取进度orderId
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_IMP_REWARD {
+}
+
+// 战令购买经验
+message C2S_AI_ACTIVITY_BATTLEPASS_BUY_EXP {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_BUY_EXP {
+    int32 level = 1;
+}
+
+// 节日战令
+// 战令信息
+message C2S_AI_ACTIVITY_BATTLEPASS_TWO_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_TWO_INFO {
+    int32 level                  = 2;  // 当前等级
+    int32 exp                    = 3;  // 当前经验
+    repeated int32 reward_levels = 4;  // 奖励已领取的等级列表
+    int32 imp_reward_order_id    = 5;  // 当前领取进度orderId
+    bool recharged               = 6;  // 是否购买了礼包
+}
+
+// 领取等级奖励
+message C2S_AI_ACTIVITY_BATTLEPASS_TWO_LEVEL_REWARD {
+    int32 id              = 1;  // 活动id
+    repeated int32 levels = 2;  // 所有要领取的等级奖励 1个或者多个
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_TWO_LEVEL_REWARD {
+}
+
+// 领取大奖
+message C2S_AI_ACTIVITY_BATTLEPASS_TWO_IMP_REWARD {
+    int32 id       = 1;  // 活动id
+    int32 order_id = 2;  // 领取进度orderId
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_TWO_IMP_REWARD {
+}
+
+// 购买战令经验
+message C2S_AI_ACTIVITY_BATTLEPASS_TWO_BUY_EXP {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_BATTLEPASS_TWO_BUY_EXP {
+    int32 level = 1;
+}
+
+enum AI_ACTIVITY_FUND_TYPE {
+    FUND_NONE    = 0;
+    FUND_HERO    = 1;  // 英雄基金
+    FUND_WARSHIP = 2;  // 战舰基金
+    FUND_LOGIN   = 3;  // 登录基金
+}
+
+// 获取基金信息
+message C2S_AI_ACTIVITY_FUND_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_FUND_INFO {
+    int32 id                        = 1;  // 活动id
+    AI_ACTIVITY_FUND_TYPE fund_type = 2;  // 基金类型
+    bool is_recharge                = 3;  // 是否充值
+    int32 progress                  = 4;  // 进度
+    repeated int32 free_rewards     = 5;  // 已领取免费奖励(档位index)
+    repeated int32 recharge_rewards = 6;  // 已领取充值奖励(档位index)
+}
+
+// 获取基金奖励
+message C2S_AI_ACTIVITY_FUND_GET_REWARD {
+    int32 id    = 1;  // 活动id
+    int32 index = 2;  // 档位index
+}
+message S2C_AI_ACTIVITY_FUND_GET_REWARD {
+    repeated int32 free_rewards     = 1;  // 已领取免费奖励(档位index)
+    repeated int32 recharge_rewards = 2;  // 已领取充值奖励(档位index)
+}
+
+enum AI_ACTIVITY_DAYPASS_TYPE {
+    DAYPASS_NONE    = 0;
+    DAYPASS_WARSHIP = 1;  // 战舰
+    DAYPASS_HERO    = 2;  // 英雄
+}
+
+// 获取活动天数通行证信息
+message C2S_AI_ACTIVITY_DAYPASS_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_DAYPASS_INFO {
+    int32 id                           = 1;  // 活动id
+    AI_ACTIVITY_DAYPASS_TYPE pass_type = 2;  // 类型
+    bool is_recharge                   = 3;  // 是否充值
+    repeated int32 free_rewards        = 4;  // 已领取免费奖励(档位index)
+    repeated int32 recharge_rewards    = 5;  // 已领取充值奖励(档位index)
+}
+
+// 获取活动天数通行证奖励
+message C2S_AI_ACTIVITY_DAYPASS_GET_REWARD {
+    int32 id    = 1;  // 活动id
+    int32 index = 2;  // 档位index
+}
+message S2C_AI_ACTIVITY_DAYPASS_GET_REWARD {
+    repeated int32 free_rewards     = 1;  // 已领取免费奖励(档位index)
+    repeated int32 recharge_rewards = 2;  // 已领取充值奖励(档位index)
+}
+
+// 七日签到信息
+message C2S_AI_ACTIVITY_SIGN7DAY_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_SIGN7DAY_INFO {
+    int32 max_sign_day = 1;  // 已经签到的最大天数
+    bool is_today_sign = 2;  // 今日是否已经签到
+}
+
+// 七日签到/补签
+message C2S_AI_ACTIVITY_SIGN7DAY_SIGN {
+    int32 id             = 1;  // 活动id
+    int32 last_day_index = 2;  // 前6天不用传值，第7天多选一，传下标过来，0或1
+    bool is_make_up      = 3;  // 是否补签
+}
+message S2C_AI_ACTIVITY_SIGN7DAY_SIGN {
+    int32 max_sign_day = 1;  // 已经签到的最大天数
+    bool is_today_sign = 2;  // 今日是否已经签到
+}
+
+// 充值双倍信息
+message C2S_AI_ACTIVITY_RECHARGE_DOUBLE_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_RECHARGE_DOUBLE_INFO {
+    int32 day_remain_times = 1;  // 每日翻倍的剩余次数
+}
+
+message AI_ACTIVITY_LUCKY_CAT_MARQUEE_INFO {
+    string name = 1;  // 玩家名
+    int32 rate  = 2;  // 倍率 万分比
+    int32 gain  = 3;  // 得到的钻石
+}
+
+// 招财猫信息
+message C2S_AI_ACTIVITY_LUCKY_CAT_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LUCKY_CAT_INFO {
+    bool is_can_take                                     = 1;  // 是否可以领取
+    int32 remain_times                                   = 2;  // 剩余转盘次数
+    repeated AI_ACTIVITY_LUCKY_CAT_MARQUEE_INFO marquess = 3;  // 跑马灯信息
+    int32 cost_diamonds                                  = 4;  // 需投入的钻石数
+    int32 progress                                       = 5;  // 当前进度
+    int32 progress_max                                   = 6;  // 进度上限
+    int32 day_max_times                                  = 7;  // 每日最大次数
+    bool is_day_take_limit                               = 8;  // 是否达到每日最大次数
+}
+
+// 招财猫领取次数
+message C2S_AI_ACTIVITY_LUCKY_CAT_TAKE {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LUCKY_CAT_TAKE {
+    int32 remain_times     = 1;  // 剩余转盘次数
+    bool is_day_take_limit = 2;  // 是否达到每日最大次数
+}
+
+// 招财猫转盘抽奖
+message C2S_AI_ACTIVITY_LUCKY_CAT_TURNTABLE_ROLL {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LUCKY_CAT_TURNTABLE_ROLL {
+    int32 hit_index                                      = 1;  // 抽中转盘index[0-6]
+    int32 remain_times                                   = 2;  // 剩余转盘次数
+    int32 cost_diamonds                                  = 3;  // 下次需投入的钻石数
+    int32 reward_diamonds                                = 4;  // 奖励钻石数
+    repeated AI_ACTIVITY_LUCKY_CAT_MARQUEE_INFO marquess = 5;  // 跑马灯信息
+}
+
+// 跨服特惠礼包，跨服限购礼包
+message C2S_AI_ACTIVITY_LIMIT_GIFT_CROSS_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LIMIT_GIFT_CROSS_INFO {
+    bool day_free_reward_status = 1;  // 是否领取每日免费奖励
+    map<int32, int32> buy_times = 2;  // 已经购买次数，key:index,value:次数
+}
+
+// 跨服特惠礼包，跨服限购礼包领取每日免费奖励
+message C2S_AI_ACTIVITY_LIMIT_GIFT_CROSS_TAKE_FREE_REWARD {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_LIMIT_GIFT_CROSS_TAKE_FREE_REWARD {
+}
+
+message ai_activity_rank_cross {
+    ai_activity_base base_info                                    = 1;   // 排行榜基础配置信息
+    repeated msg_common.ai_activity_rank_info ranks               = 3;   // 个人排行榜列表
+    int64 mine_score                                              = 4;   // 我的得分
+    int32 mine_rank                                               = 5;   // 我的排名
+    bool gift_taked                                               = 6;   // 奖励是否已领取
+    int64 init_score                                              = 7;   // 初始得分
+    repeated msg_common.ai_activity_rank_server_info server_ranks = 8;   // 区服排行榜列表
+    int64 server_mine_score                                       = 9;   // 我的区服得分
+    int32 server_mine_rank                                        = 10;  // 我的区服排名
+    bool server_gift_taked                                        = 11;  // 我的区服奖励是否已领取
+}
+
+// 跨服冲榜获取信息
+message C2S_AI_ACTIVITY_RANK_CROSS_GET_INFO {
+    int32 id = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_RANK_CROSS_GET_INFO {
+    ai_activity_rank_cross ai_activity_rank_cross_info = 1;  // 冲榜信息
+}
+
+// 跨服冲榜领取奖励
+message C2S_AI_ACTIVITY_RANK_CROSS_TAKE_REWARD {
+    int32 id       = 1;  // 活动id
+    bool is_server = 2;  // 是否区服
+}
+
+message S2C_AI_ACTIVITY_RANK_CROSS_TAKE_REWARD {
+    int32 id                                         = 1;  // 活动id
+    enum_const.AI_ACTIVITY_RANK_CROSS_TYPE rank_type = 2;  // 冲榜类型
+    bool gift_taked                                  = 3;  // 奖励是否已领取
+    bool is_server                                   = 4;  // 是否区服
+}
+
+message ai_activity_rank_guild {
+    ai_activity_base base_info                                  = 1;  // 排行榜基础配置信息
+    repeated msg_common.ai_activity_rank_guild_info ranks = 2;  // 公会排行榜列表
+    int64 mine_score                                      = 3;  // 我的公会得分
+    int32 mine_rank                                       = 4;  // 我的公会排名
+    bool gift_taked                                       = 5;  // 我的公会奖励是否已领取
+    int64 init_score                                      = 6;  // 我的公会初始得分
+}
+
+// 公会冲榜获取信息
+message C2S_AI_ACTIVITY_RANK_GUILD_GET_INFO {
+    int32 id = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_RANK_GUILD_GET_INFO {
+    ai_activity_rank_guild ai_activity_rank_guild_info = 1;  // 公会冲榜信息
+}
+
+// 公会冲榜领取奖励
+message C2S_AI_ACTIVITY_RANK_GUILD_TAKE_REWARD {
+    int32 id = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_RANK_GUILD_TAKE_REWARD {
+    int32 id                                         = 1;  // 活动id
+    enum_const.AI_ACTIVITY_RANK_GUILD_TYPE rank_type = 2;  // 冲榜类型
+    bool gift_taked                                  = 3;  // 奖励是否已领取
+}
+
+
+// 获取充值御守奖励
+message C2S_AI_ACTIVITY_AMULET_RECHARGE_INFO {
+  int32 id = 1;
+}
+message S2C_AI_ACTIVITY_AMULET_RECHARGE_INFO {
+  int32 can_reward_num = 1;  // 可领取御守数量
+  string progress      = 2;  // 当前进度 金额 两位小数
+  string progress_max  = 3;  // 进度上限 金额 两位小数
+}
+
+// 领取充值御守奖励
+message C2S_AI_ACTIVITY_AMULET_RECHARGE_REWARD {
+  int32 id = 1;
+}
+message S2C_AI_ACTIVITY_AMULET_RECHARGE_REWARD {
+  int32 reward_num   = 1;  // 本次领取御守数量
+  int32 reward_total = 2;  // 御守总数量
+}
+
+// 获取充值御守奖励
+message C2S_AI_ACTIVITY_AMULET_RECHARGE_CROSS_INFO {
+  int32 id = 1;
+}
+message S2C_AI_ACTIVITY_AMULET_RECHARGE_CROSS_INFO {
+  int32 can_reward_num = 1;  // 可领取御守数量
+  string progress      = 2;  // 当前进度 金额 两位小数
+  string progress_max  = 3;  // 进度上限 金额 两位小数
+}
+
+// 领取充值御守奖励
+message C2S_AI_ACTIVITY_AMULET_RECHARGE_CROSS_REWARD {
+  int32 id = 1;
+}
+message S2C_AI_ACTIVITY_AMULET_RECHARGE_CROSS_REWARD {
+  int32 reward_num   = 1;  // 本次领取御守数量
+  int32 reward_total = 2;  // 御守总数量
+}
+
+// 14天登录战舰
+message C2S_AI_ACTIVITY_SIGN14DAY_INFO {
+  int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_SIGN14DAY_INFO {
+  int32 max_sign_day = 1;  // 已经签到的最大天数
+  bool is_recharge = 2;  // 是否已充值
+}
+
+// 14天登录战舰领取奖励
+message C2S_AI_ACTIVITY_SIGN14DAY_REWARD {
+  int32 id             = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_SIGN14DAY_REWARD {
+  int32 max_sign_day = 1;  // 已经签到的最大天数
+}
+
+message C2S_AI_ACTIVITY_PYRAMID_INFO {
+  int32 id             = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_PYRAMID_INFO {
+  int32 level = 1; // 层，最小为1(包含抽满)，玩家未开始前为最高层
+  repeated int32 rewards = 2; //已领取的奖励 rewardId
+  map<int32, int32> chooses = 3;//已选择的道具 唯一ID => 道具位置， rewardId => itemSlot
+  int32 reset_count = 4; // 已重置次数
+}
+
+message C2S_AI_ACTIVITY_PYRAMID_DRAW {
+  int32 id             = 1;  // 活动id
+}
+
+message S2C_AI_ACTIVITY_PYRAMID_DRAW {
+  repeated int32 rewards = 1; // 已领取的奖励 rewardId
+  int32 level = 2; // 层，最小为1(包含抽满)，玩家未开始前为最高层
+}
+
+message C2S_AI_ACTIVITY_PYRAMID_CHOOSE {
+  int32 id             = 1;  // 活动id
+  int32 reward_id      = 2;  // 配置表里的唯一ID
+  int32 item_slot = 3;  // 选择的道具位置，从1开始，0表示未选择
+}
+message S2C_AI_ACTIVITY_PYRAMID_CHOOSE {
+  map<int32, int32> chooses = 1; // 已选择的道具 rewardId => itemSlot
+}
+
+message C2S_AI_ACTIVITY_PYRAMID_RESET {
+  int32 id = 1; // 活动id
+}
+message S2C_AI_ACTIVITY_PYRAMID_RESET {
+  int32 level = 1; // 层，与 INFO 一致
+  repeated int32 rewards = 2; // 已领取的奖励 rewardId
+  map<int32, int32> chooses = 3; // 已选择的道具 rewardId => itemSlot
+  int32 reset_count = 4; // 已重置次数
+}
+
+// 蛇形礼包信息
+message C2S_AI_ACTIVITY_SNAKE_GIFT_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_SNAKE_GIFT_INFO {
+    int32 id                 = 1;  // 活动id
+    repeated int32 rewards   = 2;  // 已领取/购买的档位 reward_lv
+}
+
+// 蛇形礼包领取免费奖励
+message C2S_AI_ACTIVITY_SNAKE_GIFT_GET_REWARD {
+    int32 id        = 1;  // 活动id
+    int32 reward_lv = 2;  // 档位 reward_lv
+}
+message S2C_AI_ACTIVITY_SNAKE_GIFT_GET_REWARD {
+    repeated int32 rewards = 1;  // 已领取/购买的档位 reward_lv
+}
+
+message AI_ACTIVITY_LUCKY_CHESS_PANEL_CELL {
+    int32 index        = 1;  // 格子索引 [0-8]
+    int32 reward_id    = 2;  // 格子奖励的道具Id
+    int32 reward_count = 3;  // 格子奖励的道具数量
+}
+
+message AI_ACTIVITY_LUCKY_CHESS_PANEL {
+    int32 panel_type                  = 1;  // 卡池类型 [1-5]
+    repeated AI_ACTIVITY_LUCKY_CHESS_PANEL_CELL cells = 2; // 格子列表
+}
+
+message AI_ACTIVITY_LUCKY_CHESS_LOG {
+    int32 panel_type              = 1;
+    repeated msg_common.reward_record logs = 2;
+}
+
+// 幸运棋牌当前各个卡池信息
+message C2S_AI_ACTIVITY_LUCKY_CHESS_INFO {}
+message S2C_AI_ACTIVITY_LUCKY_CHESS_INFO {
+    repeated AI_ACTIVITY_LUCKY_CHESS_PANEL panels = 1;
+    repeated AI_ACTIVITY_LUCKY_CHESS_LOG logs     = 2;
+}
+
+// 幸运棋牌打开指定格子
+message C2S_AI_ACTIVITY_LUCKY_CHESS_DRAW {
+    int32 panel_type = 1;
+    int32 index     = 2; //[0-8]
+}
+message S2C_AI_ACTIVITY_LUCKY_CHESS_DRAW {
+    int32 panel_type                = 1;
+    int32 index                     = 2;
+    int32 reward_id                 = 3;
+    int32 reward_count              = 4;
+    bool auto_refresh               = 6;
+    AI_ACTIVITY_LUCKY_CHESS_LOG log = 7;
+}
+
+// 幸运棋牌刷新卡池
+message C2S_AI_ACTIVITY_LUCKY_CHESS_REFRESH {
+    int32 panel_type = 1;
+}
+message S2C_AI_ACTIVITY_LUCKY_CHESS_REFRESH {
+    int32 panel_type = 1;
+}
+
+// 幸运棋牌礼包信息,已经购买的次数
+message C2S_AI_ACTIVITY_LUCKY_CHESS_GIFT_INFO {
+}
+message S2C_AI_ACTIVITY_LUCKY_CHESS_GIFT_INFO {
+    map<int32, int32> gifts = 1; // 礼包信息，key:礼包id,value:已经购买次数
+}
+
+// 幸运棋牌礼包道具兑换
+message C2S_AI_ACTIVITY_LUCKY_CHESS_GIFT_BUY {
+    int32 id = 1; //礼包id
+}
+message S2C_AI_ACTIVITY_LUCKY_CHESS_GIFT_BUY {
+    int32 id = 1; // 奖励道具id
+    int32 buy_count = 2; // 购买次数
+}
+
+
+// 幸运福袋信息
+message C2S_AI_ACTIVITY_LUCKY_BAG_INFO {}
+message S2C_AI_ACTIVITY_LUCKY_BAG_INFO {
+    int32 type = 1; //购买的卡池类型[1-5]
+    int32 item_id = 2; //购买道具id
+    int32 item_count = 3; //购买道具数量
+}
+
+// ========== 节日活动 (SubType holiday 301~309) ==========
+
+// 节日活动 - 战令 (holiday activity_id=303)，对齐 battlepass 玩法协议
+// 战令面板
+message C2S_AI_ACTIVITY_HOLIDAY_BP_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BP_INFO {
+    int32 level                  = 2;  // 当前等级
+    int32 exp                    = 3;  // 当前经验
+    repeated int32 reward_levels = 4;  // 奖励已领取的等级列表
+    int32 imp_reward_order_id    = 5;  // 当前领取进度 orderId
+    bool recharged               = 6;  // 是否购买了礼包
+}
+
+// 领取等级奖励
+message C2S_AI_ACTIVITY_HOLIDAY_BP_LEVEL_REWARD {
+    int32 id              = 1;  // ai_activity_holiday.xlsx 行 id
+    repeated int32 levels = 2;  // 所有要领取的等级奖励
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BP_LEVEL_REWARD {
+}
+
+// 领取进度奖励（付费战令）
+message C2S_AI_ACTIVITY_HOLIDAY_BP_IMP_REWARD {
+    int32 id       = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 order_id = 2;  // 领取进度 orderId
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BP_IMP_REWARD {
+}
+
+// 钻石购买经验（补满当前级）
+message C2S_AI_ACTIVITY_HOLIDAY_BP_BUY_EXP {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BP_BUY_EXP {
+    int32 level = 1;  // 购买后当前等级
+}
+
+// 节日活动 - 幸运福袋 (holiday activity_id=302)
+// 福袋面板（已购买时返回抽中结果）
+message C2S_AI_ACTIVITY_HOLIDAY_LUCKY_BAG_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_LUCKY_BAG_INFO {
+    int32 type       = 1;  // 购买的卡池类型[1-5]
+    int32 item_id    = 2;  // 购买道具id
+    int32 item_count = 3;  // 购买道具数量
+}
+
+// 节日活动 - 宴会 (holiday activity_id=307)
+message ai_activity_holiday_banquet_info {
+    int64 id                                          = 1;  // 宴会id
+    int32 cid                                         = 2;  // 宴会配置id
+    msg_common.role_simple_info holder                = 3;  // 举办者
+    repeated msg_common.role_simple_info participants = 4;  // 参与者，普宴5到10条，盛宴20条
+    int32 participants_count                          = 5;  // 参与人数，普宴与 participants 一致，盛宴是真实的人数
+    int64 hold_time                                   = 6;  // 举办时间
+    int64 remain_time                                 = 7;  // 剩余时间,毫秒 0代表结束
+    int32 my_role                                     = 8;  // 玩家角色：0没有参与 1举办者 2参与者
+    int64 reward                                      = 9;  // 宴会的总积分
+    repeated int32 legal_gifts                        = 21; // 普宴用，接受的礼物 [1,2,3] 1接受薄礼 2接受厚礼 3接受豪礼
+}
+
+message ai_activity_holiday_role_banquet_info {
+    int64 id          = 1;  // 宴会id 0代表没有
+    int32 cid         = 2;  // 宴会配置id
+    int32 count       = 3;  // 宴会人数
+    int64 remain_time = 4;  // 剩余时间 0代表结束
+}
+
+message ai_activity_holiday_banquet_simple_info {
+    int64 id                           = 1;  // 宴会id
+    int32 cid                          = 2;  // 宴会配置id
+    msg_common.role_simple_info holder = 3;  // 举办者
+    int32 count                        = 4;  // 宴会人数
+    int64 hold_time                    = 5;  // 举办时间
+    int64 remain_time                  = 6;  // 剩余时间 0代表结束
+    int32 my_role                      = 7;  // 玩家角色 -- 0:没有参与，1:举办者，2:参与者
+    int64 total_earn                   = 8;  // 总的酒宴点
+}
+
+message ai_activity_holiday_banquet_hold_simple_record {
+    int32 cid        = 1;  // 宴会配置id
+    int64 end_time   = 2;  // 结束时间
+    int32 count      = 3;  // 宴会人数
+    int64 score      = 4;  // 获得的积分
+    string hold_name = 5;  // 举办者名称
+    int64 id         = 6;  // 宴会ID
+}
+
+message ai_activity_holiday_banquet_exchange_info {
+    msg_common.role_simple_info rid = 1;  // 赴宴玩家
+    int32 gift_level                = 2;  // 礼物等级
+    int32 gift_score                = 3;  // 礼物增加积分
+    int32 join_my_count             = 4;  // 参加次数
+    int32 my_join_count             = 5;  // 回宴次数
+}
+
+message ai_activity_holiday_banquet_join_info {
+    string role_name = 1;
+    int64 score      = 2;
+    int32 rid        = 3;
+}
+
+// 宴会面板协议,我的宴会
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_ROLE {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_ROLE {
+    ai_activity_holiday_role_banquet_info normalBanquet = 1;  // 举办中的宴会
+    int32 identity_add                                  = 6;  // 万分比 /100 + % 如有小数点，保留2位
+    int32 hero_add                                      = 7;  // 万分比 /100 + % 如有小数点，保留2位
+    int32 warship_add                                   = 8;  // 万分比 /100 + % 如有小数点，保留2位
+}
+
+// 赴宴列表，本服宴会列表
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_GLOBAL {
+    int32 id  = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 tid = 2;  // 1普宴 2盛宴
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_GLOBAL {
+    repeated ai_activity_holiday_banquet_simple_info infos = 1;  // 宴会简单信息
+}
+
+// 通过宴会id查询宴会详细信息
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_INFO {
+    int32 id         = 1;  // ai_activity_holiday.xlsx 行 id
+    int64 banquet_id = 2;  // 宴会id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_INFO {
+    ai_activity_holiday_banquet_info info = 1;  // 宴会详情
+}
+
+// 举办宴会
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_HOLD {
+    int32 id   = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 c_id = 2;  // ai_activity_holiday_banquet.xlsx 宴会配置 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_HOLD {
+    ai_activity_holiday_banquet_info infos = 1;  // 宴会信息
+}
+
+// 参加宴会
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_JOIN {
+    int32 id         = 1;  // ai_activity_holiday.xlsx 行 id
+    int64 banquet_id = 2;  // 参加宴会的id
+    int32 gift_level = 3;  // 礼品等级 1薄礼 2厚礼 3豪礼
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_JOIN {
+    int64 score   = 1;  // 排行榜积分
+    int64 gold    = 2;  // 商店货币
+    int64 diamond = 3;  // 钻石
+}
+
+// 修改宴会最低礼品等级
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_CHANGE_LEVEL {
+    int32 id                   = 1;  // ai_activity_holiday.xlsx 行 id
+    int64 banquet_id           = 2;  // 参加宴会的id
+    repeated int32 legal_gifts = 3;  // 普宴用，接受的礼物 [1,2,3] 1接受薄礼 2接受厚礼 3接受豪礼
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_CHANGE_LEVEL {
+    int64 banquet_id           = 1;  // 参加宴会的id
+    repeated int32 legal_gifts = 2;  // 普宴用，接受的礼物 [1,2,3] 1接受薄礼 2接受厚礼 3接受豪礼
+}
+
+// 我举办的宴会记录，已经办过的宴会列表
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_HOLD_RECORD {
+    int32 id  = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 min = 2;
+    int32 max = 3;
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_HOLD_RECORD {
+    repeated ai_activity_holiday_banquet_hold_simple_record records = 1;  // 宴会记录
+}
+
+// 互宴记录
+message C2S_AI_ACTIVITY_HOLIDAY_BANQUET_RECORD {
+    int32 id         = 1;  // ai_activity_holiday.xlsx 行 id
+    int64 banquet_id = 2;  // 宴会id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_BANQUET_RECORD {
+    repeated ai_activity_holiday_banquet_exchange_info records = 1;  // 互宴记录
+}
+
+// 仅举办者会收到该信息
+message S2C_SYNC_AI_ACTIVITY_HOLIDAY_BANQUET_INFO {
+    int64 id                                                          = 1;  // 宴会id
+    int64 gold                                                        = 2;  // 自己获得的酒宴点
+    int64 score                                                       = 3;  // 自己获得的人气值
+    int64 diamond                                                     = 4;  // 自己获得的钻石
+    repeated ai_activity_holiday_banquet_join_info join_info          = 5;  // 参与者信息
+}
+
+// 同步宴会信息
+message S2C_SYNC_AI_ACTIVITY_HOLIDAY_BANQUET_JOIN {
+    ai_activity_holiday_banquet_info info = 1;  // 宴会信息
+}
+
+// 通知宴会参加者宴会结束
+message S2C_SYNC_AI_ACTIVITY_HOLIDAY_BANQUET_END {
+    int64 id = 1;  // 宴会id
+}
+
+// 节日活动 - 抽卡 (holiday activity_id=301)
+message HOLIDAY_GACHA_DRAW_INFO {
+    int32 draw_type                           = 1;  // 1-单抽 2-多抽
+    msg_common.common_item ticket_cost        = 2;  // 奖券消耗
+    int32 show_num                            = 3;  // 本次抽奖次数
+}
+
+// 抽卡面板
+message C2S_AI_ACTIVITY_HOLIDAY_GACHA_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_GACHA_INFO {
+    int32 total_draws                           = 1;  // 保底进度（自上次获得保底奖励以来的抽数，触发后归零）
+    HOLIDAY_GACHA_DRAW_INFO draw_single         = 2;  // 单抽配置
+    HOLIDAY_GACHA_DRAW_INFO draw_more           = 3;  // 多抽配置
+    msg_common.common_item big_reward           = 4;  // 大奖展示
+    repeated int32 got_reward_ids               = 5;  // 已获得的 reward 道具 id
+    repeated int32 shop_cfg_ids                 = 6;  // 节日商店已开放商品 cfg id 列表
+    repeated msg_common.common_item display_rewards = 7;  // extra 展示奖励
+}
+
+// 抽卡
+message C2S_AI_ACTIVITY_HOLIDAY_GACHA_DRAW {
+    int32 id        = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 draw_type = 2;  // 1-单抽 2-多抽
+}
+message S2C_AI_ACTIVITY_HOLIDAY_GACHA_DRAW {
+    repeated msg_common.common_item item = 1;  // 本次抽中奖励
+    int32 total_draws                    = 2;  // 保底进度（自上次获得保底奖励以来的抽数，触发后归零）
+}
+
+// 节日活动 - 一番赏 (holiday activity_id=308)
+message HOLIDAY_WASH_REWARD_STATE {
+    int32 reward_cfg_id = 1;  // ai_activity_holiday_wash_reward.xlsx id
+    int32 type          = 2;  // 1特等奖 2头等奖 3二等奖 4三等奖
+    int32 remain        = 3;  // 奖池剩余数量
+    int32 total         = 4;  // 奖池总量
+}
+
+// 抽中玩家简要信息
+message HOLIDAY_WASH_WINNER {
+    int32 rid   = 1;  // 玩家 rid
+    string name = 2;  // 玩家名称
+    int32 head  = 3;  // 玩家头像
+    int32 count = 4;  // 抽中次数（仅 top_winner 使用）
+}
+
+// 按 reward id 的展示信息
+message HOLIDAY_WASH_REWARD_SHOW {
+    int32 reward_cfg_id                  = 1;  // 奖励配置 id
+    int32 type                           = 2;  // 同 reward 表 type
+    repeated HOLIDAY_WASH_WINNER winners = 3;  // 抽中玩家列表：type1/2最多2，type3/4最多10
+    HOLIDAY_WASH_WINNER top_winner       = 4;  // type3/4：该 id 抽中次数最多的玩家（副奖）
+    HOLIDAY_WASH_WINNER last_winner      = 5;  // type3/4：该 id 最后一份抽中者（最后奖）
+}
+
+// 一番赏面板
+message C2S_AI_ACTIVITY_HOLIDAY_WASH_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_WASH_INFO {
+    int32 total_draws                           = 1;  // 玩家累计抽数
+    HOLIDAY_GACHA_DRAW_INFO draw_single         = 2;  // 单抽配置
+    HOLIDAY_GACHA_DRAW_INFO draw_more           = 3;  // 多抽配置
+    repeated HOLIDAY_WASH_REWARD_STATE rewards  = 4;  // 全服奖池剩余状态
+    int32 rank_score                            = 5;  // 排行榜积分（reward_core 累计，整场活动）
+    int32 my_rank                               = 6;  // 我的排名，0 表示未上榜
+    repeated msg_common.ai_activity_rank_info ranks = 7;  // Top10 排行榜
+    repeated HOLIDAY_WASH_REWARD_SHOW shows     = 8;  // 按 id 的中奖展示
+}
+
+// 一番赏抽奖
+message C2S_AI_ACTIVITY_HOLIDAY_WASH_DRAW {
+    int32 id        = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 draw_type = 2;  // 1-单抽 2-多抽
+}
+message S2C_AI_ACTIVITY_HOLIDAY_WASH_DRAW {
+    repeated msg_common.common_item item = 1;  // 本次抽中奖励
+    int32 total_draws                    = 2;  // 玩家累计抽数
+    int32 rank_score                     = 3;  // 最新排行榜积分
+    repeated int32 reward_cfg_ids        = 4;  // 本次抽中的奖励配置 id 列表
+}
+
+// 一番赏特等/头等奖中奖全服推送（type=1/2）
+message S2C_SYNC_AI_ACTIVITY_HOLIDAY_WASH_WIN {
+    int32 id                             = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 reward_cfg_id                  = 2;  // 奖励配置 id
+    int32 type                           = 3;  // 1特等奖 2头等奖
+    HOLIDAY_WASH_WINNER winner           = 4;  // 中奖玩家
+}
+
+// 节日活动 - 七日礼包 (holiday activity_id=304)
+message HOLIDAY_7DAY_GIFT_INFO {
+    int32 day       = 1;  // 第几天（1~7）
+    int32 buy_times = 2;  // 该天礼包已购次数
+}
+
+// 七日礼包面板
+message C2S_AI_ACTIVITY_HOLIDAY_7DAY_GIFT_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_7DAY_GIFT_INFO {
+    repeated int32 day_rewards            = 1;  // 已领取额外奖励的天数
+    repeated HOLIDAY_7DAY_GIFT_INFO infos = 2;  // 各天购买情况
+    int32 day                             = 3;  // 活动当前进行到第几天
+}
+
+// 领取额外奖励（extra_reward，需对应天数已购完）
+message C2S_AI_ACTIVITY_HOLIDAY_7DAY_GIFT_REWARD {
+    int32 id  = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 day = 2;  // 领取第几天的 extra_reward
+}
+message S2C_AI_ACTIVITY_HOLIDAY_7DAY_GIFT_REWARD {
+    int32 day = 1;  // 领取的天数
+}
+
+
+// 节日活动 - 应援 (holiday activity_id=309)
+// 应援面板
+message C2S_AI_ACTIVITY_HOLIDAY_SUPPORT_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_SUPPORT_INFO {
+    int32 choose_side  = 1; // 选择阵营 0-未选择 1-A方 2-B方
+    int32 side_a_score = 2; // A方积分
+    int32 side_b_score = 3; // B方积分
+    int32 my_score     = 4; // 我的积分
+    int32 my_progress_reward_index  = 5; // 我的积分已经领取到进度奖励索引
+    repeated int32 side_progress_reward_indexs  = 6; // 阵营已经领取到进度奖励索引列表
+}
+
+// 选择支持阵营
+message C2S_AI_ACTIVITY_HOLIDAY_SUPPORT_CHOOSE {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 choose_side = 2; // 选择阵营 1-A方 2-B方
+}
+message S2C_AI_ACTIVITY_HOLIDAY_SUPPORT_CHOOSE {
+    int32 choose_side = 1; // 选择阵营 1-A方 2-B方
+}
+
+// 领取个人进度奖励
+message C2S_AI_ACTIVITY_HOLIDAY_MY_SUPPORT_PROGRESS_REWARD {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_MY_SUPPORT_PROGRESS_REWARD {
+    int32 index = 1; // 进度奖励索引
+}
+
+// 领取阵营进度奖励
+message C2S_AI_ACTIVITY_HOLIDAY_SIDE_SUPPORT_PROGRESS_REWARD {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 index = 2; // 进度奖励索引
+}
+message S2C_AI_ACTIVITY_HOLIDAY_SIDE_SUPPORT_PROGRESS_REWARD {
+    int32 index = 1; // 进度奖励索引
+}
+
+// 支持自己的阵营，捐献道具增加积分
+message C2S_AI_ACTIVITY_HOLIDAY_SIDE_SUPPORT_SUPPORT {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+    repeated msg_common.common_item items = 2; // 支持物品列表
+}
+message S2C_AI_ACTIVITY_HOLIDAY_SIDE_SUPPORT_SUPPORT {
+    int32 my_score = 1; // 我的积分
+    int32 side_a_score = 2; // A方积分
+    int32 side_b_score = 3; // B方积分
+}
+
+// 应援个人积分榜
+message C2S_AI_ACTIVITY_HOLIDAY_SUPPORT_RANK {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_SUPPORT_RANK {
+    repeated msg_common.ai_activity_rank_info ranks = 1;  // Top 排行榜
+    int32 my_rank = 2; // 我的排名，0 表示未上榜
+    int64 my_score = 3; // 我的积分
+}
+
+// 节日活动 - 拼图 (holiday activity_id=306)
+// 拼图面板
+message C2S_AI_ACTIVITY_HOLIDAY_PUZZLE_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_PUZZLE_INFO {
+    repeated int32 points        = 1;  // 已点亮坐标 id 列表
+    repeated int32 taked_rewards = 2;  // 已领取奖励 id 列表
+    msg_common.common_item draw_cost = 3;  // 翻牌消耗
+}
+
+// 翻牌点亮拼图
+message C2S_AI_ACTIVITY_HOLIDAY_PUZZLE_DRAW {
+    int32 id = 1; // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_PUZZLE_DRAW {
+    int32 point = 1;  // 本次点亮的坐标 id
+}
+
+// 领取拼图进度奖励
+message C2S_AI_ACTIVITY_HOLIDAY_PUZZLE_TAKE_REWARD {
+    int32 id         = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 reward_id  = 2;  // ai_activity_holiday_puzzle_reward.xlsx 奖励 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_PUZZLE_TAKE_REWARD {
+    int32 reward_id = 1;  // 领取的奖励 id
+}
+
+// 小游戏活动 (ai_activity_xiaoyouxi.xlsx)
+message C2S_AI_ACTIVITY_MINIGAME_INFO {
+    int32 id = 1; // 活动配置 id
+}
+message S2C_AI_ACTIVITY_MINIGAME_INFO {
+    int32 id = 1;
+    int32 rank_score = 2; // 累计排行榜分数
+    int32 my_rank = 3;
+    repeated msg_common.ai_activity_rank_info ranks = 4;
+    map<int32, int32> gift_buys = 5; // 礼包 id -> 已购次数
+    bool gift_taked = 6; // 排行奖励是否已领取（智力/煎药）
+}
+
+message C2S_AI_ACTIVITY_MINIGAME_CONSUME {
+    int32 id = 1;      // 活动配置 id
+    int32 item_id = 2; // consume_item 中的道具 id
+    int32 times = 3;   // 消耗次数
+}
+message S2C_AI_ACTIVITY_MINIGAME_CONSUME {
+    int32 id = 1;
+    int32 score_delta = 2;   // 本次得分
+    int32 rank_score = 3;    // 累计排行榜分数
+    int32 score_item_id = 4; // 积分道具 id
+    repeated msg_common.common_item rewards = 5; // 额外奖励
+    bool is_crit = 6; // 本次任一次积分池抽中暴击档（同组 id 最大）
+}
+
+message C2S_AI_ACTIVITY_MINIGAME_GIFT_INFO {
+    int32 id = 1;
+}
+message S2C_AI_ACTIVITY_MINIGAME_GIFT_INFO {
+    int32 id = 1;
+    map<int32, int32> gift_buys = 2;
+}
+
+message C2S_AI_ACTIVITY_MINIGAME_GIFT_BUY {
+    int32 id = 1;
+    int32 gift_id = 2;
+    int32 times = 3; // 购买次数
+}
+message S2C_AI_ACTIVITY_MINIGAME_GIFT_BUY {
+    int32 id = 1;
+    int32 gift_id = 2;
+    int32 buy_count = 3;
+}
+
+// 小游戏排行奖励手动领取（智力/煎药，领奖期内）
+message C2S_AI_ACTIVITY_MINIGAME_TAKE_RANK_REWARD {
+    int32 id = 1; // 活动配置 id
+}
+message S2C_AI_ACTIVITY_MINIGAME_TAKE_RANK_REWARD {
+    int32 id = 1;
+    bool gift_taked = 2;
+    int32 my_rank = 3;
+    repeated msg_common.common_item rewards = 4;
+}
+
+// 节日活动 - 通用礼包（gacha/wash/support/puzzle/banquet）
+// 查询已购礼包信息
+message C2S_AI_ACTIVITY_HOLIDAY_GIFT_INFO {
+    int32 id = 1;  // ai_activity_holiday.xlsx 行 id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_GIFT_INFO {
+    map<int32, int32> gift_buys = 1;  // 礼包 id -> 已购次数（按 GiftGroup）
+}
+
+// 礼包购买（道具兑换/免费领取；充值礼包走各活动 deliver）
+message C2S_AI_ACTIVITY_HOLIDAY_GIFT_BUY {
+    int32 id      = 1;  // ai_activity_holiday.xlsx 行 id
+    int32 gift_id = 2;  // ai_activity_holiday_gift.xlsx id
+}
+message S2C_AI_ACTIVITY_HOLIDAY_GIFT_BUY {
+    int32 gift_id   = 1;  // 礼包 id
+    int32 buy_count = 2;  // 该礼包累计购买次数
+}
+
+// 同乐礼包条目信息
+message AI_ACTIVITY_TONGLE_GIFT_ITEM {
+    int32 id          = 1;  // 礼包配置id
+    int32 buy_times   = 2;  // 已购买次数
+    int32 share_times = 3;  // 剩余可分享次数
+}
+
+// 同乐礼包信息
+message C2S_AI_ACTIVITY_TONGLE_GIFT_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_TONGLE_GIFT_INFO {
+    int32 id = 1;
+    repeated AI_ACTIVITY_TONGLE_GIFT_ITEM gifts = 2;
+}
+
+// 同乐礼包发起分享
+message C2S_AI_ACTIVITY_TONGLE_GIFT_SHARE {
+    int32 id         = 1;  // 活动id
+    int32 gift_id    = 2;  // 礼包配置id
+    int32 channel_id = 3;  // 分享频道，仅记日志
+}
+message S2C_AI_ACTIVITY_TONGLE_GIFT_SHARE {
+    string packet_id = 1;  // 红包唯一ID
+    int32 packet_cfg_id = 2;  // 通用红包配置id
+}
+
+// 冲榜礼包信息
+message C2S_AI_ACTIVITY_RUSH_GIFT_INFO {
+    int32 id = 1;  // 活动id
+}
+message S2C_AI_ACTIVITY_RUSH_GIFT_INFO {
+    int32 id = 1;  // 活动id
+    map<int32, int32> buy_gift = 2;  // 礼包id,购买次数
+}
+
+// 活动通用礼包（ai_activity_gift.xlsx）：按 group_id 匹配当前开期活动
+message C2S_AI_ACTIVITY_GIFT_INFO {
+    int32 group_id = 1;  // ai_activity_gift.group_id
+}
+message S2C_AI_ACTIVITY_GIFT_INFO {
+    int32 group_id = 1;
+    map<int32, int32> gift_buys = 2;  // 礼包 id -> 已购次数
+}
+
+// 道具兑换 / 免费领取（recharge==0）；充值礼包走 DeliverM
+message C2S_AI_ACTIVITY_GIFT_BUY {
+    int32 id = 1;  // ai_activity_gift.id
+}
+message S2C_AI_ACTIVITY_GIFT_BUY {
+    int32 id        = 1;
+    int32 buy_count = 2;  // 购买后有效已购次数
+}

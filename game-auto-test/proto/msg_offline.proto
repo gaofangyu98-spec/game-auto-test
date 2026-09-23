@@ -1,0 +1,10 @@
+syntax = "proto3";
+package msg_offline;
+
+message C2S_OFFLINE_ALERT {}
+
+message S2C_OFFLINE_ALERT {
+  int64 offlineTime = 1;
+  int64 offlineGold = 2;
+  int64 offlineTimeMax = 3;
+}

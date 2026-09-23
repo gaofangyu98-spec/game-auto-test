@@ -1,0 +1,10 @@
+syntax = "proto3";
+package msg_newbie_lucky_bag;
+
+message C2S_NEWBIE_LUCKY_BAG_INFO {}
+
+message S2C_NEWBIE_LUCKY_BAG_INFO {
+  int64 bought = 1;
+}
+
+message S2C_SYNC_NEWBIE_LUCKY_BAG_UPDATE {}

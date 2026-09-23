@@ -1,0 +1,14 @@
+syntax = "proto3";
+package msg_gm;
+
+message C2S_GM_INDEX {}
+
+message S2C_GM_INDEX {
+  // commands: unknown field number
+}
+
+message C2S_GM_SEND {
+  string command = 1;
+}
+
+message S2C_GM_SEND {}

@@ -1,0 +1,130 @@
+syntax = "proto3";
+package msg_player_chapter;
+
+message chapter_event {
+  int64 eventId = 1;
+  int64 eventConfigId = 2;
+  int64 triggerTime = 3;
+}
+
+message chapter_map {
+  int64 bornPos = 1;
+  // smallBossPosList: unknown field number
+  int64 bigBossPos = 3;
+}
+
+message chapter_gate_config {
+  int64 id = 1;
+  int64 gateInt = 2;
+  int64 chapterNum = 3;
+  // gateProduce: unknown field number
+  // gateConsume: unknown field number
+  int64 strength = 7;
+  // reward: unknown field number
+  int64 mapId = 9;
+  // map: unknown field number
+  int64 bossImageId = 16;
+  // chapterIds: unknown field number
+  // gateReward: unknown field number
+}
+
+message C2S_ROLE_CHAPTER {}
+
+message S2C_ROLE_CHAPTER {
+  int64 chapterId = 1;
+  int64 gateId = 2;
+  int64 flagship = 3;
+  int64 lossCost = 4;
+  int64 silverBuffCount = 5;
+  int64 itemBuffCount = 6;
+  int64 nextCost = 7;
+  int64 silverBuffCost = 8;
+  int64 itemBuffCost = 9;
+  // gateRewards: unknown field number
+  // gateConfig: unknown field number
+}
+
+message C2S_ROLE_CHAPTER_EVENT {}
+
+message S2C_ROLE_CHAPTER_EVENT {
+  // chapterEvents: unknown field number
+}
+
+message C2S_PASS_GATE {}
+
+message S2C_PASS_GATE {
+  int64 gateId = 1;
+  // triggerEventId: unknown field number
+  int64 heroExp = 3;
+  int64 emote = 4;
+  // showItems: unknown field number
+}
+
+message S2C_SYNC_LOSS {
+  int64 oldValue = 1;
+  int64 value = 2;
+  int64 nextCost = 3;
+}
+
+message C2S_FIGHT_BOSS {
+  int64 addDamageRate = 1;
+}
+
+message S2C_FIGHT_BOSS {
+  int64 isSuccess = 1;
+  // items: unknown field number
+  // showItems: unknown field number
+  int64 fightBossPower = 4;
+  // nextGateConfig: unknown field number
+}
+
+message C2S_ADD_FIGHT_BUFF {
+  int64 isUseItem = 1;
+}
+
+message S2C_ADD_FIGHT_BUFF {
+  int64 silverBuffCount = 1;
+  int64 itemBuffCount = 2;
+  int64 silverBuffCost = 3;
+  int64 itemBuffCost = 4;
+  int64 fightBossPower = 5;
+}
+
+message C2S_HANDLE_EVENT {
+  int64 eventId = 1;
+  // eventSelects: unknown field number
+}
+
+message S2C_HANDLE_EVENT {}
+
+message C2S_HANDLE_EVENT_QUICK {
+  // eventId: unknown field number
+}
+
+message S2C_HANDLE_EVENT_QUICK {}
+
+message C2S_ROLE_FLAGSHIP {}
+
+message S2C_ROLE_FLAGSHIP {
+  // flagships: unknown field number
+}
+
+message C2S_CHANGE_FLAGSHIP {
+  int64 flagshipId = 1;
+}
+
+message S2C_CHANGE_FLAGSHIP {
+  int64 nextCost = 1;
+}
+
+message S2C_NEW_FLAGSHIP {
+  int64 flagshipId = 1;
+}
+
+message C2S_GET_GATE_REWARD {
+  // gateIds: unknown field number
+}
+
+message S2C_GET_GATE_REWARD {
+  // gateIds: unknown field number
+}

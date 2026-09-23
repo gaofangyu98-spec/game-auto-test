@@ -1,0 +1,201 @@
+syntax = "proto3";
+package msg_player_hero;
+
+message player_hero_skill {
+  int64 sid = 1;
+  int64 tid = 2;
+  int64 lv = 3;
+  int64 pos = 4;
+  int64 lvMax = 5;
+}
+
+message sword_no_medal {
+  int64 sword = 1;
+  int64 aptitude = 2;
+  int64 precent = 3;
+  int64 count = 4;
+}
+
+message player_hero_sword_detail {
+  int64 origin = 1;
+  int64 medal = 10;
+  int64 warship = 11;
+  int64 halo = 12;
+  int64 upgrade = 13;
+  int64 talent = 14;
+  int64 heh = 15;
+  int64 consort = 16;
+  int64 item = 17;
+  int64 pvp = 18;
+  int64 medalPercent = 18;
+  int64 warshipPercent = 19;
+  int64 haloPercent = 20;
+  int64 upgradePercent = 21;
+  int64 talentPercent = 22;
+  int64 hehPercent = 23;
+  int64 consortPercent = 24;
+  int64 itemPercent = 25;
+  int64 pvpPercent = 26;
+}
+
+message player_hero_aptitude {
+  int64 total = 1;
+  int64 origin = 2;
+  int64 skill = 3;
+  int64 medal = 4;
+  int64 warship = 5;
+  int64 upgrade = 6;
+  int64 halo = 7;
+  int64 talent = 8;
+  int64 skin = 9;
+  int64 heh = 10;
+}
+
+message player_hero {
+  int64 hid = 1;
+  int64 quality = 2;
+  int64 lv = 3;
+  int64 star = 4;
+  // fateActived: unknown field number
+  int64 medalId = 6;
+  int64 upgradeLv = 7;
+  // aptitude: unknown field number
+  // swordDetail: unknown field number
+  // skills: unknown field number
+  // skinActived: unknown field number
+  // skinOwned: unknown field number
+  int64 sword = 13;
+  int64 swordAlpha = 14;
+  int64 lvMax = 15;
+  int64 lvAdd = 16;
+  // swordNoMedal: unknown field number
+  int64 elv = 18;
+  int64 swordMax = 19;
+  int64 chapterPercentTalent = 20;
+}
+
+message HERO_EAT_HERO_PARAM {
+  // itemIds: unknown field number
+}
+
+message C2S_PLAYER_HERO_EAT_HERO {
+  int64 hid = 1;
+  // items: unknown field number
+}
+
+message S2C_PLAYER_HERO_EAT_HERO {
+  int64 hid = 1;
+  int64 elv = 2;
+}
+
+message C2S_PLAYER_HERO_LIST {}
+
+message S2C_PLAYER_HERO_LIST {
+  // heroes: unknown field number
+}
+
+message C2S_PLAYER_HERO_LV_UP {
+  int64 hid = 1;
+  int64 times = 2;
+}
+
+message S2C_PLAYER_HERO_LV_UP {
+  int64 hid = 1;
+  int64 lv = 2;
+  int64 swordAlpha = 3;
+}
+
+message C2S_PLAYER_HERO_UPGARDE {
+  int64 hid = 1;
+}
+
+message S2C_PLAYER_HERO_UPGARDE {
+  int64 hid = 1;
+  int64 upgradeLv = 2;
+}
+
+message C2S_PLAYER_HERO_STAR_LV_UP {
+  int64 hid = 1;
+}
+
+message S2C_PLAYER_HERO_STAR_LV_UP {
+  int64 hid = 1;
+  int64 star = 2;
+}
+
+message C2S_PLAYER_HERO_SKILL_LV_UP {
+  int64 hid = 1;
+  int64 sid = 2;
+  int64 iid = 3;
+  int64 pos = 4;
+  int64 tid = 5;
+}
+
+message S2C_PLAYER_HERO_SKILL_LV_UP {
+  int64 hid = 1;
+  // skill: unknown field number
+}
+
+message C2S_PLAYER_HERO_REPLACE_MEDAL {
+  int64 hid = 1;
+  int64 sourceMedalId = 2;
+  int64 targetMedalId = 3;
+}
+
+message S2C_PLAYER_HERO_REPLACE_MEDAL {
+  int64 sourceMedalId = 1;
+  int64 sourceHid = 2;
+  int64 targetMedalId = 3;
+  int64 targetHid = 4;
+}
+
+message C2S_PLAYER_HERO_CHANGE_SKIN {
+  int64 hid = 1;
+  int64 sid = 2;
+}
+
+message S2C_PLAYER_HERO_CHANGE_SKIN {
+  int64 hid = 1;
+  // skinActived: unknown field number
+}
+
+message S2C_PLAYER_HERO_SKIN_NEW {
+  int64 hid = 1;
+  // skin: unknown field number
+}
+
+message C2S_PLAYER_HERO_SKIN_UNLOCK {
+  int64 hid = 1;
+  int64 sid = 2;
+}
+
+message S2C_PLAYER_HERO_SKIN_UNLOCK {}
+
+message C2S_PLAYER_HERO_SKIN_LV_UP {
+  int64 hid = 1;
+  int64 sid = 2;
+}
+
+message S2C_PLAYER_HERO_SKIN_LV_UP {
+  int64 hid = 1;
+  // skin: unknown field number
+}
+
+message S2C_PLAYER_HERO_SWORD_CHANGE {
+  int64 hid = 1;
+  int64 sword = 2;
+  // swordDetail: unknown field number
+  // aptitude: unknown field number
+  // swordNoMedal: unknown field number
+  // fateActived: unknown field number
+  int64 swordMax = 7;
+}
+
+message S2C_PLAYER_HERO_SKILL_CHANGE {
+  int64 hid = 1;
+  // skills: unknown field number
+}
+
+message S2C_PLAYER_HERO_NEW {
+  // hero: unknown field number
+}

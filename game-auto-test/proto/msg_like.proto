@@ -1,0 +1,35 @@
+syntax = "proto3";
+package msg_like;
+
+message LIKE_ITEM {
+  int64 likeId = 1;
+  int64 status = 2;
+}
+
+message C2S_LIKE_LIST {}
+
+message S2C_LIKE_LIST {
+  // items: unknown field number
+}
+
+message LIKE_RESULT {
+  // items: unknown field number
+  // rankRole: unknown field number
+  // rankGuild: unknown field number
+  int64 rankIdx = 4;
+  string params = 5;
+}
+
+message C2S_LIKE {
+  int64 likeId = 1;
+  string likeParams = 2;
+  int64 source = 3;
+}
+
+message S2C_LIKE {
+  int64 likeId = 1;
+  int64 status = 2;
+  // result: unknown field number
+  int64 source = 4;
+  int64 code = 5;
+}

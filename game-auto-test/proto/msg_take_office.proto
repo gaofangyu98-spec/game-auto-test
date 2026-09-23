@@ -1,0 +1,162 @@
+syntax = "proto3";
+package msg_take_office;
+
+message TAKE_OFFICE_DATA {
+  int64 id = 1;
+  int64 rid = 2;
+  int64 flightAttendantId = 3;
+  string name = 4;
+  int64 warshipId = 5;
+  int64 trainType = 6;
+  int64 flightAttendantType = 7;
+  int64 takeOffice = 8;
+  int64 otherRid = 9;
+  int64 otherFlightAttendantId = 10;
+  int64 otherWarshipId = 11;
+  int64 otherFlightAttendantType = 12;
+  string otherName = 13;
+  int64 takeOfficeTs = 14;
+  int64 attributes = 15;
+  int64 otherAttributes = 16;
+  int64 otherServId = 17;
+  string otherRoleName = 18;
+  int64 buildTeamEndTs = 19;
+  int64 buildTeamType = 20;
+  int64 buildTeamId = 21;
+}
+
+message BUILD_TEAM_DATA {
+  int64 id = 1;
+  int64 rid = 2;
+  int64 flightAttendantId = 3;
+  string name = 4;
+  int64 warshipId = 5;
+  int64 flightAttendantType = 6;
+  int64 attributes = 7;
+  int64 buildTeamOverTs = 8;
+  string roleName = 9;
+  int64 isRobot = 10;
+}
+
+message ROLE_INFO {
+  int64 rid = 1;
+  int64 head = 2;
+  int64 headFrame = 3;
+  string roleName = 4;
+  int64 servId = 5;
+  int64 lastLoginTs = 6;
+  int64 attributes = 7;
+  int64 isRefusal = 8;
+  int64 flightAttendantId = 9;
+  int64 supTime = 10;
+  int64 id = 11;
+  string name = 12;
+}
+
+message TakeOfficeRecord {
+  int64 takeOfficeId = 1;
+  // items: unknown field number
+}
+
+message C2S_TAKE_OFFICE_LIST {}
+
+message S2C_TAKE_OFFICE_LIST {
+  // notTakeOfficeData: unknown field number
+  // takeOfficeData: unknown field number
+  int64 refreshNum = 3;
+  // record: unknown field number
+  int64 flightGraduateCount = 5;
+  int64 takeOfficeFlightProdSum = 6;
+}
+
+message C2S_TAKE_OFFICE_BUILD_TEAM {
+  int64 takeOfficeType = 1;
+  int64 id = 2;
+}
+
+message S2C_TAKE_OFFICE_BUILD_TEAM {
+  // takeOfficeData: unknown field number
+}
+
+message C2S_TAKE_OFFICE_BUILD_TEAM_CANCEL {
+  int64 takeOfficeType = 1;
+  int64 id = 2;
+}
+
+message S2C_TAKE_OFFICE_BUILD_TEAM_CANCEL {
+  // takeOfficeData: unknown field number
+}
+
+message C2S_TAKE_OFFICE_BUILD_TEAM_LIST {
+  int64 takeOfficeType = 1;
+  int64 id = 3;
+}
+
+message S2C_TAKE_OFFICE_BUILD_TEAM_LIST {
+  // buildTeamData: unknown field number
+  int64 guildTeamCount = 2;
+}
+
+message C2S_TAKE_OFFICE_TEAM_UP {
+  int64 takeOfficeType = 1;
+  int64 otherId = 2;
+  int64 ownId = 3;
+  int64 servId = 4;
+  int64 rid = 5;
+}
+
+message S2C_TAKE_OFFICE_TEAM_UP {
+  // takeOfficeData: unknown field number
+  int64 itemId = 2;
+  int64 itemNum = 3;
+}
+
+message C2S_TAKE_OFFICE_RECENT_ROLE_INFO {}
+
+message S2C_TAKE_OFFICE_RECENT_ROLE_INFO {
+  // roleInfo: unknown field number
+}
+
+message C2S_TAKE_OFFICE_ROLE_INFO {
+  int64 serverId = 1;
+  int64 rid = 2;
+}
+
+message S2C_TAKE_OFFICE_ROLE_INFO {
+  // roleInfo: unknown field number
+}
+
+message C2S_TAKE_OFFICE_TEAM_REQUEST_LIST {}
+
+message S2C_TAKE_OFFICE_TEAM_REQUEST_LIST {
+  // roleInfo: unknown field number
+  int64 isRefusal = 2;
+}
+
+message C2S_TAKE_OFFICE_TEAM_REQUEST_DEAL_WITH {
+  int64 isRefusal = 1;
+  int64 rid = 2;
+  int64 id = 3;
+  int64 roleInfoId = 4;
+}
+
+message S2C_TAKE_OFFICE_TEAM_REQUEST_DEAL_WITH {
+  // takeOfficeData: unknown field number
+  int64 itemId = 2;
+  int64 itemNum = 3;
+}
+
+message C2S_TAKE_OFFICE_IS_REFUSAL {
+  int64 isRefusal = 1;
+}
+
+message S2C_TAKE_OFFICE_IS_REFUSAL {}
+
+message C2S_TAKE_OFFICE_REFRESH_BUILD_TEAM {
+  int64 takeOfficeType = 1;
+  int64 id = 3;
+}
+
+message S2C_TAKE_OFFICE_REFRESH_BUILD_TEAM {
+  // buildTeamData: unknown field number
+}

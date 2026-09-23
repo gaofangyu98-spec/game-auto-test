@@ -1,0 +1,87 @@
+syntax = "proto3";
+package msg_mail;
+import "msg_common.proto";
+option go_package = "./../../pb";
+
+enum MAIL_ID {
+    UNKNOWN = 0;  // 无效
+
+    AMULET_EXCHANGE_REWARD       = 92010;  // 御守兑换水晶
+    AMULET_EXCHANGE_REWARD_CROSS = 92011;  // 跨服御守兑换水晶
+    RICE_CAKE_EXCHANGE_REWARD    = 92013;  // 年糕兑换水晶
+    SIGN_FOURTEEN_REWARD      = 92014;  // 14天登录补发
+    LUCKY_CHESS_EXCHANGE_REWARD = 92016; // 幸运棋牌抽奖券兑换水晶
+    MINIGAME_RANK_REWARD        = 92017; // 小游戏活动排行榜
+    MINIGAME_EXCHANGE_REWARD    = 92018; // 小游戏活动结束转换
+    MINIGAME_CHAHUA_TASK_REWARD = 98130; // 小游戏插花未领成就任务补发
+    MINIGAME_SHIDU_TASK_REWARD  = 98131; // 小游戏试毒未领成就任务补发
+    MINIGAME_ZHILI_EXCHANGE     = 98132; // 小游戏智力结束道具转换
+    MINIGAME_JIANYAO_EXCHANGE   = 98133; // 小游戏煎药结束道具转换
+    MINIGAME_ZHILI_RANK_REWARD  = 98134; // 小游戏智力排行榜补发
+    MINIGAME_JIANYAO_RANK_REWARD = 98135; // 小游戏煎药排行榜补发
+    MINIGAME_CHAHUA_EXCHANGE    = 98136; // 小游戏插花结束道具转换
+    MINIGAME_SHIDU_EXCHANGE     = 98137; // 小游戏试毒结束道具转换
+    PYRAMID_EXCHANGE_REWARD = 94009; // 金字塔兑换
+    HOLIDAY_GACHA_EXCHANGE_REWARD = 94010; // 节日抽卡券转换
+    HOLIDAY_WASH_RANK_REWARD      = 94011; // 节日一番赏排行榜
+    HOLIDAY_SUPPORT_RANK_REWARD   = 94012; // 节日应援排行榜
+    CONSORT_GARDEN_RANK_REWARD   = 98115;  // 后宫pvp排行榜
+    WEEK_CARD_TICKER_REWARD = 98116; // 周卡体验券
+}
+
+message MAIL_ATTACHMENT {
+    int32 id             = 1;
+    int64 num            = 2;
+    repeated int64 extra = 3;
+}
+
+// 邮件信息
+message MAIL_INFO {
+    int64 mail_id                                     = 1;   // 邮件对象Id
+    int32 type                                        = 2;   // 邮件类型
+    string mail_title                                 = 4;   // 标题
+    repeated msg_common.CHARACTERS_PARAM title_params = 5;   // 标题多语言参数
+    string mail_desc                                  = 6;   // 内容
+    repeated msg_common.CHARACTERS_PARAM desc_params  = 7;   // 内容多语言参数
+    int64 create_ts                                   = 8;   // 创建时间
+    repeated MAIL_ATTACHMENT items                    = 9;   // 附件物品
+    bool is_item_got                                  = 11;  // 是否领取附件
+    bool is_read                                      = 12;  // 是否已读
+    int64 expire_ts                                   = 13;  // 过期时间
+}
+
+// 同步邮件
+// message C2S_SYNC_MAILS{
+// }
+message S2C_SYNC_MAILS {
+    repeated MAIL_INFO mails = 1;
+}
+
+// 邮件
+message C2S_MAIL {
+}
+message S2C_MAIL {
+    repeated MAIL_INFO mails = 1;  // 邮件列表
+}
+
+// 删除邮件
+message C2S_MAIL_DEL {
+    repeated int64 ids = 1;  // 邮件对象Id
+}
+message S2C_MAIL_DEL {
+}
+
+// 领取邮件附件
+message C2S_MAIL_ATTACHMENTS {
+    repeated int64 ids = 1;  // 邮件对象Id
+}
+message S2C_MAIL_ATTACHMENTS {
+}
+
+// 已读邮件
+message C2S_MAIL_READ_REQ {
+    repeated int64 ids = 1;  // 邮件id
+}
+message S2C_MAIL_READ_RET {
+    repeated int64 ids = 1;  // 邮件id
+}

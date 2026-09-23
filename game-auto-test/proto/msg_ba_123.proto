@@ -1,0 +1,23 @@
+syntax = "proto3";
+package msg_ba_123;
+
+message limit_gift_7day_info {
+  int64 day = 1;
+  int64 buyTimes = 2;
+}
+
+message C2S_LIMIT_GIFT_7DAY_INFO {}
+
+message S2C_LIMIT_GIFT_7DAY_INFO {
+  // dayRewards: unknown field number
+  // infos: unknown field number
+  int64 day = 3;
+}
+
+message C2S_LIMIT_GIFT_7DAY_GET_REWARD {
+  int64 day = 1;
+}
+
+message S2C_LIMIT_GIFT_7DAY_GET_REWARD {
+  int64 day = 1;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+package msg_ba_131;
+
+message C2S_BA131_INFO {}
+
+message S2C_BA131_INFO {
+  int64 isRecharge = 1;
+  // canTake: unknown field number
+  // hasTaked: unknown field number
+}
+
+message C2S_BA131_TAKE {}
+
+message S2C_BA131_TAKE {
+  // canTake: unknown field number
+  // hasTaked: unknown field number
+}

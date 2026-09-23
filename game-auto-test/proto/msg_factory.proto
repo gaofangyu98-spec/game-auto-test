@@ -1,0 +1,196 @@
+syntax = "proto3";
+package msg_factory;
+
+message factory_eff_compose {
+  int64 effType = 1;
+  int64 effValue = 2;
+}
+
+message factory_info {
+  int64 fid = 1;
+  int64 lv = 2;
+  int64 employeeAmount = 3;
+  // partnerId: unknown field number
+  int64 eff = 5;
+  // effCompose: unknown field number
+  int64 recruitReduceCost = 7;
+  int64 lvMax = 8;
+}
+
+message C2S_ROLE_FACTORY {}
+
+message S2C_ROLE_FACTORY {
+  // factoryInfos: unknown field number
+  int64 totalEff = 2;
+}
+
+message C2S_GET_FACTORY_OFFLINE {
+  int64 lastExitTime = 1;
+}
+
+message S2C_GET_FACTORY_OFFLINE {
+  int64 offlineTime = 1;
+  int64 eff = 2;
+}
+
+message C2S_UNLOCK_FACTORY {
+  int64 fid = 1;
+}
+
+message S2C_UNLOCK_FACTORY {}
+
+message C2S_UPGRADE_FACTORY {
+  int64 fid = 1;
+}
+
+message S2C_UPGRADE_FACTORY {}
+
+message C2S_CLICK_BANK {
+  int64 fid = 1;
+}
+
+message S2C_CLICK_BANK {}
+
+message C2S_RECRUIT_EMPLOYEE {
+  int64 fid = 1;
+  int64 recruitAmount = 2;
+}
+
+message S2C_RECRUIT_EMPLOYEE {}
+
+message C2S_HERO_ENTER_FACTORY {
+  int64 fid = 1;
+  // hid: unknown field number
+}
+
+message S2C_HERO_ENTER_FACTORY {}
+
+message S2C_SYNC_Eff {
+  // factoryInfo: unknown field number
+}
+
+message C2S_SYNC_FACTORY_SILVER {}
+
+message C2S_BANK_INFO {
+  int64 fid = 1;
+}
+
+message S2C_BANK_INFO {
+  int64 fid = 1;
+  // newBieGuild: unknown field number
+}
+
+message Patient {
+  int64 id = 1;
+  int64 degreeId = 2;
+  // costItem: unknown field number
+  int64 bDiagnose = 4;
+}
+
+message NewBieGuild {
+  int64 lvl = 1;
+  int64 exp = 2;
+  int64 totalExp = 3;
+  int64 totalPatients = 4;
+  int64 healing = 5;
+  int64 giveCaseHealing = 6;
+  int64 caseGroup = 7;
+  // patients: unknown field number
+  // medicineIds: unknown field number
+  // medicalBook: unknown field number
+  // tasks: unknown field number
+  int64 taskBeginTime = 12;
+  // caseId: unknown field number
+  // villains: unknown field number
+}
+
+message C2S_CLICK_BANK_DROP_MEDICINE {
+  int64 fid = 1;
+}
+
+message S2C_CLICK_BANK_DROP_MEDICINE {
+  // changeItem: unknown field number
+  int64 exp = 2;
+  int64 dropExp = 3;
+}
+
+message C2S_CLICK_BANK_GET_MEDICINE {}
+
+message S2C_CLICK_BANK_GET_MEDICINE {}
+
+message C2S_BANK_UPGRADE {
+  int64 fid = 1;
+}
+
+message S2C_BANK_UPGRADE {
+  int64 lvl = 1;
+  int64 exp = 2;
+}
+
+message C2S_DIAGNOSE {
+  int64 patientId = 1;
+}
+
+message S2C_DIAGNOSE {
+  int64 patientId = 1;
+}
+
+message C2S_GIVE_MEDICATION {
+  int64 patientId = 1;
+}
+
+message S2C_GIVE_MEDICATION {
+  int64 patientId = 1;
+  // costItem: unknown field number
+  // changeItem: unknown field number
+  int64 success = 4;
+  int64 exp = 5;
+  int64 medicalBookId = 6;
+}
+
+message C2S_NEW_PATIENT {}
+
+message S2C_NEW_PATIENT {
+  int64 patientId = 1;
+  int64 patientLevelId = 2;
+}
+
+message C2S_BANK_CASE_INFO {}
+
+message S2C_BANK_CASE_INFO {
+  // caseId: unknown field number
+}
+
+message C2S_GET_CASE_REWARD {
+  int64 caseId = 1;
+}
+
+message S2C_GET_CASE_REWARD {
+  int64 caseId = 1;
+}
+
+message S2C_NEWBIE_GUILD_FINISH {}
+
+message C2S_NEWBIE_GUILD_FINISH {}
+
+message C2S_VILLAIN_REWARD {
+  int64 villainId = 1;
+}
+
+message S2C_VILLAIN_REWARD {
+  int64 villainId = 1;
+  int64 medicalBookId = 2;
+}
+
+message Villain {
+  int64 id = 1;
+  int64 cfgId = 2;
+  // point: unknown field number
+}
+
+message C2S_NEW_VILLAIN {}
+
+message S2C_NEW_VILLAIN {
+  // villains: unknown field number
+  // villainLastCreateTime: unknown field number
+}

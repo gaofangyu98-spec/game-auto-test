@@ -1,0 +1,45 @@
+syntax = "proto3";
+package msg_rank;
+
+message RANKING_INFO_FLIGHT {
+  int64 cid = 1;
+  string name = 2;
+}
+
+message RANKING_INFO {
+  int64 v = 1;
+  // role: unknown field number
+  // flight: unknown field number
+  // guild: unknown field number
+  int64 isCross = 6;
+  // server: unknown field number
+}
+
+message C2S_RANKING_LIST {
+  // rankIds: unknown field number
+}
+
+message S2C_RANKING_LIST {
+  // infos: unknown field number
+}
+
+message C2S_RANKING_INFO {
+  int64 rankType = 1;
+}
+
+message S2C_RANKING_INFO {
+  // rankingInfo: unknown field number
+  int64 beginTs = 3;
+  int64 endTs = 4;
+  int64 mineScore = 5;
+  int64 mineRank = 6;
+}
+
+message C2S_ROLE_RANKING_INFO {
+  int64 rankType = 1;
+}
+
+message S2C_ROLE_RANKING_INFO {
+  int64 mineScore = 1;
+  int64 mineRank = 2;
+}

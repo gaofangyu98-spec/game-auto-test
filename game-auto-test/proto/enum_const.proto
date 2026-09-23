@@ -1,0 +1,530 @@
+syntax = "proto3";
+package enum_const;
+option go_package = "./../../pb";
+
+enum ERRCODE {
+    Success           = 0;    // 无错误
+    Runtime           = 2;    // 点的太快啦，让服务器休息一会吧
+    Parameter         = 102;  // 参数不正确
+    OperateFail       = 103;  // 操作失败，请稍后再试
+    ServerNotOpen     = 104;  // 服务器未开启，检查开服时间
+    Config            = 201;  // 配置异常
+    AuthInvalid       = 203;  // 身份认证失败
+    LoginRepeated     = 204;  // 账号已在其他地方登录
+    RoleNotExists     = 206;  // 角色不存在
+    RepeatName        = 211;  // 名字重复
+    VipLvNotEnough    = 212;  // vip等级不够
+    RewardIsGet       = 213;  // 奖励已领取
+    NotEnoughGoldProd = 215;  // 课税不足
+    FunctionNotOpen   = 216;  // 功能未开放
+    RoleInactive      = 217;  // 玩家已不活跃
+    RoleAlreadyLiked  = 218;  // 今日已点赞该玩家
+    RoleLikeDailyLimit = 219; // 今日点赞次数已用完
+
+    System                 = 401;  // 系统异常
+    Parameter2             = 402;  // 参数错误
+    NotExistsPackageType   = 403;  // 没有找到对应的包类型
+    NotExistsLoginType     = 404;  // 没有找到对应的登录类型
+    NotExistsServ          = 405;  // 没有找到对应的区服
+    NotExistsHotUpdateBase = 406;  // 没有找到对应的基础版本信息
+    OnlyRegUidOrAccount    = 407;  // 只能注册官网UID或自定义用户名类型
+    AccountEmpty           = 408;  // 用户名不能为空
+    AccountLength          = 409;  // 用户名不能超过14个英文字符
+    PwdEmpty               = 410;  // 密码不能为空
+    PwdLength              = 411;  // 密码不能超过50个英文字符
+    AccountExists          = 412;  // 用户名已存在，请重新输入
+    AccountNotExists       = 413;  // 用户名不存在
+    Pwd                    = 414;  // 密码不正确
+    ServNotOpen            = 415;  // 服务器未开启
+    CreateOrder            = 416;  // 创建订单失败
+    Sign                   = 417;  // 签名错误
+    TokenExpired           = 418;  // Token已过期
+    InvalidToken           = 419;  // Token错误
+    AccountVerify          = 420;  // 第三方账号密码错误
+    ThirdAccountHasExist   = 421;  // 第三方账号已存在
+    SignExpired            = 422;  // 签名已过期
+    Maintain               = 423;  // 区服维护中
+    BanLogin               = 424;  // 账户被封，无法登录
+    WhitelistLogin         = 425;  // 非白名单，无法进入
+    GsFull                 = 426;  // 区服已满
+    HeartbeatTimeout       = 427;  // 心跳超时，连接将关闭
+    WriteStall             = 428;  // 下行写阻塞/队列满，连接将关闭
+
+    //==============公会报错===================
+    GuildMaxMemberCount              = 313;  // 公会人员达到上限
+    NotAuthed                        = 314;  // 权限不足
+    GuildMasterCantQuit              = 316;  // 公会团长不能退团
+    GuildRoleFull                    = 317;  // 角色已满
+    GuildCantBuild                   = 318;  // 公会无法建设
+    GuildDailyProgressNotEnough      = 319;  // 公会每日奖励进度不足
+    GuildGiftTaked                   = 320;  // 公会每日奖励已经领取过
+    GuildRepeatRequest               = 321;  // 公会重复申请加入
+    GuildAlreadyJoined               = 322;  // 已加入其他公会
+    GuildNotOpen                     = 323;  // 公会功能暂未开放
+    GuildJoinCD                      = 325;  // 退出公会1小时后才可以重新加入公会
+    RequestMax                       = 326;  // 公会申请列表已满
+    MemberMax                        = 327;  // 公会已满员
+    ModifyMax                        = 328;  // 公会公告次数已达上限
+    GuildCoolCD                      = 329;  // 公会已经处于冷静状态，无法重复解散
+    GuildCooling                     = 330;  // 公会处于冷静状态，无法解散
+    GuildOperateLess                 = 331;  // 公会经营点不足
+    GuildNotCut                      = 332;  // 公会奸商未砍价
+    GuildCutCD                       = 333;  // 退出公会重新加入公会后24小时后才可以砍价
+    GuildFactoryHeroMax              = 334;  // 公会战略部同类型的英雄已满
+    GuildExploreStarted              = 335;  // 公会远征已经开启
+    GuildExploreCD                   = 336;  // 今日已经开启过该公会远征
+    GuildExploreNotStart             = 337;  // 远征未开启
+    GuildExploreSwordMax             = 338;  // 已达战力上限
+    GuildExploreReturn               = 339;  // 已经是返程状态，无法派遣英雄
+    GuildExploreJoined               = 340;  // 英雄已经参与过远征
+    GuildTraderBuy                   = 341;  // 已经购买过该礼包，无法重复购买
+    GuildCuted                       = 342;  // 公会奸商已砍价
+    GuildTravelStarted               = 343;  // 该位置的运输尚未结束
+    GuildNoTravelCount               = 344;  // 没有免费运输次数
+    GuildNoTravelNoSelect            = 345;  // 没有运输数据
+    GuildTravelNotEnd                = 346;  // 运输尚未结束
+    GuildTravelNotEvent              = 347;  // 没有运输事件要处理
+    GuildTravelWarShipExist          = 348;  // 战舰已经在其他运输中
+    GuildTravelWarShipLess           = 349;  // 战舰不足5般
+    MaxConditaion                    = 350;  // 已达最大条件
+    GuildId                          = 351;  // 搜索时没有输入正确的公会Id
+    NotFoundRightGuild               = 352;  // 未找到合适的公会
+    NotFoundGuildMaster              = 353;  // 未找到公会团长信息
+    NotFoundGuild                    = 354;  // 未找到公会信息
+    GuildRequestFail                 = 355;  // 公会申请加入失败
+    NotFoundGuildMember              = 356;  // 未找到公会成员信息
+    GuildIconChangeFail              = 357;  // 更新团旗失败
+    GuildNameChangeFail              = 358;  // 更新公会名字失败
+    GuildNoticeChangeFail            = 359;  // 更新公会公告失败
+    QuitGuildFail                    = 360;  // 退出公会失败
+    GuildSetRoleFail                 = 361;  // 设置成员权限失败
+    GuildRequestSettingFail          = 362;  // 设置加入条件失败
+    GuildTravelFightRobbed           = 363;  // 已经被掠夺过
+    GuildTravelSearchSelf            = 364;  // 不能探查自己
+    GuildTravelFinished              = 365;  // 运输已结束
+    GuildTravelFightRobSelf          = 366;  // 不能挑战自己
+    GuildTravelFightRobbedTimesLimit = 367;  // 该运输被挑战次数已达上限
+    GuildTravelFightRetaliateTimeout = 368;  // 反击已过期
+    GuildTraderNotFound              = 369;  // 未发现远征商人
+    GuildTraderCutTimesLimit         = 370;  // 砍价次数达到上限
+    GuildBuildMemeberFull            = 371;  // 公会建设 今日人数已达上限
+    GvgFleetInStronghold             = 372;  // 战舰已在占领中
+    GvgFleetIllegal                  = 373;  // 舰队数据不合法
+    GuildBuildCD                     = 374;  // 加入公会后x秒才能进行公会建设
+    GuildHistoryContributionNotEnough = 375;  // 被转让者公会累计贡献不足
+    GuildTravelFightRobGuild          = 376;  // 不能挑战同公会的运输
+
+    // 400-500 http 使用
+
+    GetGlobalRole = 1010;  // 获取角色数据失败
+    GetUserData   = 1020;  // 获取角色关联数据失败
+    SetUserData   = 1021;  // 设置角色关联数据失败
+    GetUserHisV   = 1034;  // 获取历史数据失败
+    SetUserHisV   = 1035;  // 设置历史数据失败
+    AddBuff       = 1092;  // 添加Buff失败
+    GetBuff       = 1093;  // 获取Buff失败
+
+    NotEnough       = 2001;  // 不满足所需条件
+    NotEnoughItem   = 2002;  // 道具不足，注意：该错误应发送获取途径协议
+    RepeatGetReward = 2004;  // 不能重复领取奖励
+    AddItem         = 2007;  // 添加物品失败
+    CostItemData    = 2008;  // 花费的道具数据错误
+    RoleIdErr       = 2009;  // rid错误
+    RoleMaxLv       = 2011;  // 角色达到最大等级
+    NotEnoughLv     = 2013;  // 等级不足
+    GetReward       = 2014;  // 奖励已领取
+    NotFoundHero    = 2015;  // 没有找到可用的英雄
+
+    // 后宫相关
+    ConsortNotExists          = 2020;  // 后宫不存在
+    ConsortStuding            = 2021;  // 妃子正在研习中
+    ConsortStudyId            = 2022;  // 妃子研习id错误
+    ConsortStudyEnd           = 2023;  // 妃子研习已结束
+    ConsortLvNotEnough        = 2024;  // 妃子等级不足
+    ConsortFriendLToUp        = 2025;  // 好友等级已满
+    ConsortGardenRoleCD       = 2026;  // 妃子游园会玩家保护CD
+    ConsortGardenSeatCD       = 2027;  // 妃子游园会座位保护CD
+    ConsortGardenSeatLock     = 2028;  // 妃子游园会座位锁定
+    ConsortGardenSeatSelf     = 2029;  // 妃子游园会座位是自己
+    ConsortGardenSeatId       = 2030;  // 妃子游园会座位id错误
+    ConsortCrimeGameCD        = 2031;  // 妃子太医院CD
+    ConsortCrimeGameIdentity  = 2032;  // 妃子太医院身份
+    ConsortCrimeGameGetReward = 2033;  // 妃子太医院奖励
+    ConsortHospitalGameCD     = 2034;  // 妃子太医院CD
+
+    //
+    MedalNotFound     = 3006;  // 勋章不存在
+    MedalQualityMaxLv = 3012;  // 勋章觉醒等级上限
+    HeroIdErr         = 3014;  // 门客id错误
+    HeroSkillMaxLv    = 3015;  // 英雄技能达到最大值
+
+    SkinNotFound      = 3101;  // 皮肤不存在
+    TitleNotFound     = 3102;  // 称号不存在
+    IconNotFound      = 3103;  // 图标不存在
+    IconFrameNotFound = 3104;  // 图标不存在
+    SkinCantLvUp      = 3105;  // 皮肤无法升级
+    HeroNotFound      = 3106;  // 伙伴不存在
+    HeroStarMaxLv     = 3107;  // 伙伴星级已达最大
+    HeroCondition     = 3108;  // 不满足伙伴升级条件
+    SkillNotFount     = 3109;  // 技能不存在
+    MedalCantUpgrade  = 3110;  // 勋章不能突破
+    HeroMaxLv         = 3111;  // 英雄等级最大
+
+    //==============工厂报错===================
+    FactoryExist        = 3201;  // 工厂已经存在
+    FactoryNoExist      = 3202;  // 工厂不存在
+    FactoryMaxLv        = 3204;  // 工厂已经到达最大等级
+    FactoryMaxEmployees = 3205;  // 工厂员工已经最大值
+    FactoryMaxHeroes    = 3206;  // 工厂英雄已经最大值
+    HeroEnterRank       = 3208;  // 银行无法入住伙伴
+
+    // 战舰、乘务员 相关
+    SkillNotUnlock              = 3301;  // 技能未解锁
+    NotEnoughWarship            = 3302;  // 战舰不足
+    NotEnoughWarshipAtk         = 3303;  // 所需攻击力不足
+    NotEnoughWarshipDef         = 3304;  // 所需防御力不足
+    SkillUpdate                 = 3307;  // 技能更新失败
+    FlightAttendantExpNotEnough = 3308;  // 乘务员经验不足
+    NotEnoughGraduationIdx      = 3309;  // 毕业位置不足
+    FlightAttendantTakeOffice   = 3310;  // 乘务员已赴任
+    TakeOffice                  = 3311;  // 乘务员已建队
+    TakeOfficeRefusal           = 3312;  // 玩家拒绝申请
+    TakeOfficeIsRefusal         = 3313;  // 已申请该玩家
+    TakeOfficeNoGuild           = 3314;  // 没有公会
+    TakeOfficeNotSameGuild      = 3315;  // 不是同一公会，不能赴任
+    TakeOfficeNotExisit         = 3317;  // 建队信息不存在
+    TakeOfficeNotFindRole       = 3318;  // 未找到该玩家
+    TakeOfficeGuildBuildTeamMax = 3319;  // 公会建队数量已达上限
+    TakeOfficeIllegalProd       = 3320;  // 课税相差过大
+    NoWarshipCanUse             = 3321;  // 当前无可用战舰
+
+    // ==============关卡报错===================
+    MaxGate         = 3401;  // 小关已经到达最大值，需要打boss
+    NoBoss          = 3402;  // 未达到boss
+    MaxInspireCount = 3403;  // 已经最大鼓舞次数
+    EventID         = 3404;  // 错误的事件id
+    EventSelect     = 3405;  // 错误的事件id选择
+    MaxEvent        = 3406;  // 事件已经达到最大值
+    FlagshipId      = 3407;  // 错误旗舰id
+
+    // ==============pvp报错===================
+
+    NotEnoughChallenge = 3501;  // 英雄没有挑战次数
+    PvpNotFinishLast   = 3502;  // 没有完成上一场战斗
+    MaxStimulate       = 3507;  // 最大激励次数
+    PVPFactoryStore    = 3512;  // pvp 存储的金币需要领取
+    PvpMatchNoResult   = 3513;  // pvp 匹配失败
+
+    // ==============商店报错===================.
+    ShopId          = 3601;  // 商店id错误
+    ShopMaxBuyCount = 3602;  // 商店购买次数限制
+    ShopBuyTime     = 3603;  // 商品未上架
+
+    // 美誉
+    NoPeopleLike = 3702;  // 没有玩家可以点赞
+    TodayWorship = 3703;  // 已经膜拜
+
+    // 宴会
+    HoldedBanquet     = 3901;  // 已经举办宴会
+    BanquetOver       = 3902;  // 宴会已经结束
+    BanquetRepeat     = 3903;  // 宴会举办者，无法重复加入
+    BanquetMaxSeat    = 3904;  // 位置已经满
+    BanquetNoExistRid = 3905;  // 该玩家不在宴会
+    BanquetPkHold     = 3906;  // 不能和房主进行pk
+    BanquetNOPk       = 3907;  // 盛会无法进行pk
+    BanquetID         = 3908;  // ID不存在
+    BanquetNoGift     = 3909;  // 宴会没有礼品
+    BanquetCount      = 3910;  // 庆功宴没有次数
+    BanquetLowGift    = 3911;  // 宴会最小礼品
+    BanquetNoLeader   = 3912;  // 非房主不能修改
+    BanquetVipLess    = 3913;  // VIP不足
+    BanquetAlreadyJoin= 3914;  // 已加入宴会
+    BanquetNotJoin= 3915;  // 未加入宴会
+    BanquetHolidayNotAllowHoldByLastHour= 3916;  // 活动结束前最后一个小时不能举办宴会
+
+    // 讨伐
+    TowerBlessType = 4002;  // 该类型不能点赞
+    TowerBlessed   = 4003;  // 已点赞
+    TowerLimitMax  = 4004;  // 已到最高层
+    // 世界boss
+    BossNoOpen     = 4101;  // 世界boss未开启
+    BossFightCount = 4102;  // 英雄次数不足
+    BossDead       = 4103;  // 世界boss已经死亡
+    BossFighted    = 4106;  // 已经有伙伴击打，不能更换阵容
+    BossFightBusy  = 4107;  // 战斗请求处理中
+    // 设置
+    ExchangeCodeNotExist = 5001;  // 兑换码不存在
+    ExchangeCodeRepeat   = 5002;  // 兑换码已经使用过了
+    //========================活动============================
+    // 冲榜
+    ActivityNotExist      = 6001;  // 活动不存在
+    ClaimActivityRank     = 6002;  // 排行榜奖励不可领取
+    ActivityTaskNotExist  = 6003;  // 活动任务不存在
+    ActivityTaskNotFinish = 6004;  // 活动任务未完成
+    ActivityTaskClaim     = 6005;  // 活动任务已经领取
+    ActivityNoIsGift      = 6006;  // 该活动不是礼包活动
+    ActivityMaxBuyCount   = 6007;  // 该活动道具最大购买次数
+
+    // VIP
+    VipRewardVipLvLess = 7001;  // VIP等级不足
+    VipRewardGot       = 7002;  // 奖励已领取
+
+    // 活动
+    ActiveRewardGot  = 8001;  // 奖励已领取
+    ActiveNotTime    = 8002;  // 时间未到，无法领取奖励
+    ActiveNotAct     = 8003;  // 活动未激活
+    ActiveActLess    = 8004;  // 活跃值不足
+    ActiveOverTime   = 8005;  // 活动结束，无法购买
+    ActiveAlreadyBuy = 8006;  // 已经购买过礼包，不能重复购买
+    ActiveLevelLess  = 8007;  // 等级未达到，无法领取奖励
+    ActiveRewardGet  = 8008;  // 奖励已经领取了
+    ActiveNoReward   = 8009;  // 当前等级没有奖励可领取
+    ActiveBPExpLess  = 8010;  // BP任务经验不足
+    ActiveValueLess  = 8011;  // 条件未满足
+    ActiveLuckLess   = 8012;  // 幸运值不足
+    ActiveNoBuyBP    = 8013;  // 未购买BP
+    ActiveNoWashTime = 8014;  // 节日一番赏没有剩余次数
+
+    // 勋章模拟战
+    MedalBossNoGuildHero = 8101;  // 该英雄不可用
+
+    // 招财猫
+    Ba132NotTakeNotEnough = 8202;  // 无可用领取次数
+
+    FarmStealMax    = 8301;  // 农场 偷取达到上限
+    FarmStealRepeat = 8302;  // 农场 重复偷取
+
+    FirstStagePatientNotExist      = 8401;  // 药铺病人配置不存在
+    FirstStagePatientNeedsNotExist = 8402;  // 药铺病人需求配置不存在
+    FirstStagePatientDiagnose      = 8403;  // 药铺病人已经诊断
+
+    // 分享红包
+    ShareGiftPacketExpired = 8501;  // 红包已过期
+}
+
+// 本服日常排行榜类型(1-99)
+enum DAILY_RANK_TYPE {
+    MIN_DAILY = 0;  // 无效，日常排行榜最小值
+
+    GOLD_PROD_DAILY              = 1;   // 本服-课税榜
+    HERO_DAILY                   = 4;   // 本服-伙伴榜
+    WARSHIP_DAILY                = 7;   // 本服-战舰榜
+    GUILD_DAILY                  = 10;  // 本服-公会榜
+    FLIGHT_DAILY                 = 13;  // 本服-乘务员榜
+    PVP_DAILY                    = 16;  // 本服-pvp榜
+    BANQUET_DAILY                = 19;  // 本服-宴会榜
+    MEDALBOSS_DAILY              = 22;  // 本服-勋章战榜
+    GUILD_TRAVEL_WEEK_DAILY      = 25;  // 公会运输本周排行榜
+    GUILD_TRAVEL_LAST_WEEK_DAILY = 26;  // 公会运输上周排行榜
+    WORLD_BOSS_DAILY             = 27;  // 本服-世界boss伤害榜
+    GVG_SCORE_DAILY              = 30;  // gvg积分榜
+    GVG_SCORE_GUILD_DAILY        = 31;  // gvg公会积分榜
+    GVG_SCORE_SERVER_DAILY       = 32;  // gvg区服积分榜
+    CROSS_PVP_ROLE_DAILY         = 41;  // 跨服pvp-个人
+    CROSS_PVP_SERVER_DAILY       = 42;  // 跨服pvp-区服
+    TEXAS_DAILY                  = 43;  // 本服-全部-德州
+    MOUNTAIN_HERO_DAILY          = 46;  // 本服-爬塔-英雄
+    MOUNTAIN_WARSHIP_DAILY       = 47;  // 本服-爬塔-战舰
+    THORS_HAMMER_DAILY           = 48;  // 跨服 雷神之锤
+    CROSS_CONSORT_GARDEN_DAILY   = 49;  // 跨服 妃子游园会
+    CROSS_CONSORT_GARDEN_SERVER  = 50;  // 跨服 妃子游园会区服
+
+    MAX_DAILY = 100;  // 无效，日常排行榜最大值
+}
+
+// 冲榜活动类型(201-298)
+enum AI_ACTIVITY_RANK_TYPE {
+    NONE = 0;
+
+    MIN = 200;  // 无效的排行榜类型，最    小值
+
+    GOLD_PROD       = 201;  // 课税
+    CHAPTER         = 202;  // 关卡 小关+1
+    FLIGHT          = 203;  // 乘务员 课税 【乘务员】
+    BANQUET         = 204;  // 宴会 积分
+    DIAMOND_CONSUME = 205;  // 钻石 消耗
+    HERO_SWORD      = 206;  // 英雄 实力
+    WARSHIP_ATK     = 207;  // 战舰 攻击力
+    WARSHIP_DEF     = 208;  // 战舰 防御力
+    PVP             = 211;  // pvp（积分）
+    AMULET_RECHARGE = 212;  // 获得御守（累计充值） 气球
+    TURNTABLE       = 213;  // 累充转盘
+    TURNTABLE_TWO   = 214;  // 累充转盘2
+    HOLIDAY_BANQUET = 217;  // 节日活动-宴会
+    SUPPORT         = 218;  // 应援
+    HOLIDAY_WASH    = 220;  // 节日一番赏
+    HOLIDAY_SUPPORT = 221;  // 节日应援
+    MINIGAME        = 222;  // 小游戏活动
+    GUILD_TRAVEL    = 223;  // 公会运输（强化牵绊点）【个人】
+
+    MAX = 299;  // 无效的排行榜类型，最大值
+}
+
+// 公会冲榜活动类型
+enum AI_ACTIVITY_RANK_GUILD_TYPE {
+    NONE_GUILD = 0;
+
+    MIN_GUILD = 300;  // 无效的排行榜类型，最小值
+
+    GUILD_EXP = 301;  // 公会 经验（公会经验）【公会】
+
+    MAX_GUILD = 399;  // 无效的排行榜类型，最大值
+}
+
+// 跨服冲榜活动类型
+enum AI_ACTIVITY_RANK_CROSS_TYPE {
+    NONE_CROSS = 0;
+
+    MIN_CROSS = 10000;  // 无效的排行榜类型，最小值
+
+    GOLD_PROD_CROSS       = 100201;  // 课税
+    CHAPTER_CROSS         = 100202;  // 关卡 小关+1
+    FLIGHT_CROSS          = 100203;  // 乘务员 课税 【乘务员】
+    BANQUET_CROSS         = 100204;  // 宴会 积分
+    DIAMOND_CONSUME_CROSS = 100205;  // 钻石 消耗
+    HERO_SWORD_CROSS      = 100206;  // 英雄 实力 增加
+    WARSHIP_ATK_CROSS     = 100207;  // 战舰 攻击力 增加
+    WARSHIP_DEF_CROSS     = 100208;  // 战舰 防御力 增加
+    GUILD_CROSS           = 100209;  // 公会 经验（公会经验）【公会】
+    GUILD_TRAVEL_CROSS    = 100210;  // 公会 运输（强化牵绊点）【公会】
+    PVP_CROSS             = 100211;  // pvp（积分）
+    AMULET_RECHARGE_CROSS = 100212;  // 获得御守（累计充值） 气球
+    TURNTABLE_CROSS       = 100213;  // 累充转盘
+    HERO_SWORD_MAX_CROSS  = 100215;  //  英雄 实力 最大
+
+    MAX_CROSS = 100299;  // 无效的排行榜类型，最大值
+}
+
+enum MAIL_TYPE {
+    None = 0;
+
+    Mid9999 = 9999;  // GM 全服邮件
+    Mid9998 = 9998;  // GM 个人邮件
+
+    Mid90001 = 90001;
+    Mid90005 = 90005;
+    Mid90006 = 90006;
+    Mid90007 = 90007;
+    Mid92001 = 92001;
+    Mid92002 = 92002;
+    Mid92003 = 92003;
+    Mid92004 = 92004;
+    Mid92005 = 92005;
+    Mid92006 = 92006;
+    Mid92007 = 92007;
+    Mid92008 = 92008;
+    Mid92009 = 92009;
+    Mid92012 = 92012;
+    Mid92014 = 92014;
+    Mid92015 = 92015;
+    Mid92016 = 92016;
+    Mid93001 = 93001;
+    Mid93002 = 93002;
+    Mid93003 = 93003;
+    Mid93004 = 93004;
+    Mid93005 = 93005;
+    Mid93006 = 93006;
+    Mid93007 = 93007;
+    Mid93008 = 93008;
+    Mid93009 = 93009;
+    Mid93010 = 93010;
+    Mid93011 = 93011;
+    Mid93013 = 93013;
+    Mid93014 = 93014;
+    Mid93015 = 93015;
+    Mid93016 = 93016;
+    Mid93017 = 93017;
+    Mid93018 = 93018;
+    Mid93019 = 93019;
+    Mid93020 = 93020;
+    Mid93021 = 93021;
+    Mid93022 = 93022;
+    Mid93023 = 93023;
+    Mid93024 = 93024;
+    Mid93025 = 93025;
+    Mid93026 = 93026;
+    Mid93027 = 93027;
+    Mid93028 = 93028;
+    Mid93029 = 93029;
+    Mid93030 = 93030;
+    Mid93031 = 93031;
+    Mid93032 = 93032;
+    Mid93033 = 93033;
+    Mid93034 = 93034;
+    Mid93035 = 93035;
+    Mid93036 = 93036;
+    Mid93037 = 93037;
+    Mid93041 = 93041;
+    Mid93042 = 93042;
+    Mid93043 = 93043;
+    Mid93044 = 93044;
+    Mid93101 = 93101;
+    Mid93102 = 93102;
+    Mid93103 = 93103;
+    Mid93104 = 93104;
+    Mid93105 = 93105;
+    Mid93106 = 93106;
+    Mid93107 = 93107;
+    Mid93113 = 93113;
+    Mid93114 = 93114;
+    Mid93115 = 93115;
+    Mid93116 = 93116;
+    Mid93118 = 93118;
+    Mid93108 = 93108;
+    Mid93109 = 93109;
+    Mid93110 = 93110;
+    Mid93111 = 93111;
+    Mid93117 = 93117;
+    Mid93119 = 93119;
+    Mid94000 = 94000;
+    Mid94004 = 94004;
+    Mid94005 = 94005;
+    Mid94006 = 94006;
+    Mid94007 = 94007;
+    Mid94008 = 94008;
+    Mid94009 = 94009;
+    Mid94010 = 94010;
+    Mid95001 = 95001;
+    Mid95002 = 95002;
+    Mid95003 = 95003;
+    Mid95004 = 95004;
+    Mid95005 = 95005;
+    Mid95006 = 95006;
+    Mid95007 = 95007;
+    Mid95008 = 95008;
+    Mid95009 = 95009;
+    Mid95010 = 95010;
+    Mid95011 = 95011;
+    Mid95014 = 95014;
+    Mid95015 = 95015;
+    Mid95117 = 95117;
+    Mid95026 = 95026;
+    Mid95027 = 95027;
+    Mid95013 = 95013;
+    Mid96101 = 96101;
+    Mid96102 = 96102;
+    Mid96103 = 96103;
+    Mid96104 = 96104;
+    Mid96105 = 96105;
+    Mid96106 = 96106;
+    Mid96107 = 96107;
+    Mid96108 = 96108;
+    Mid96109 = 96109;
+    Mid96110 = 96110;
+    Mid96111 = 96111;
+    Mid96114 = 96114;
+    Mid96115 = 96115;
+    Mid96118 = 96118;
+    Mid96024 = 96024;
+    Mid96025 = 96025;
+    Mid96113 = 96113;
+    Mid97014 = 97014;
+    Mid98114 = 98114;
+}
+
+// 玩家永久次数类型，与 role_detail 中次数记录共用。
+enum ROLE_COUNT_TYPE {
+    ROLE_COUNT_TYPE_NONE                = 0;
+    ROLE_COUNT_TYPE_WEEK_CARD3_PURCHASE = 1;  // 至尊周卡购买次数
+    ROLE_COUNT_TYPE_BE_LIKED            = 2;  // 被其他玩家点赞总次数
+}

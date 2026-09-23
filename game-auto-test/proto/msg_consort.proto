@@ -1,0 +1,271 @@
+syntax = "proto3";
+package msg_consort;
+
+message consort_property {
+  int64 id = 1;
+  int64 lvl = 2;
+  int64 exp = 3;
+}
+
+message consort_study {
+  int64 consortId = 1;
+  int64 studyId = 2;
+  int64 studyLevel = 3;
+  int64 beginTime = 4;
+  int64 studyDuration = 5;
+  int64 propertyId = 6;
+}
+
+message consort {
+  int64 consortId = 1;
+  int64 unLockState = 2;
+  int64 lvl = 3;
+  int64 lvlExp = 4;
+  // propertys: unknown field number
+  int64 friendLvl = 6;
+  int64 friendExp = 7;
+  int64 careState = 8;
+  int64 feedTimes = 9;
+  int64 chatTimes = 10;
+  int64 fightSkillId = 11;
+  // strengthenSkillIds: unknown field number
+  // likeGift: unknown field number
+}
+
+message C2S_CONSORT_INFO {}
+
+message S2C_CONSORT_INFO {
+  // consorts: unknown field number
+}
+
+message C2S_CONSORT_CHAT_START {
+  int64 consortId = 1;
+}
+
+message S2C_CONSORT_CHAT_START {
+  int64 consortId = 1;
+  int64 chatId = 2;
+}
+
+message C2S_CONSORT_CHAT_OPTION {
+  int64 consortId = 1;
+  int64 optionId = 2;
+}
+
+message S2C_CONSORT_CHAT_OPTION {
+  int64 consortId = 1;
+  int64 friendExp = 2;
+  int64 leftChatTimes = 3;
+  int64 friendLvl = 4;
+}
+
+message C2S_CONSORT_FEED {
+  int64 consortId = 1;
+}
+
+message S2C_CONSORT_FEED {
+  int64 consortId = 1;
+  int64 friendExp = 2;
+  int64 leftFeedTimes = 3;
+  int64 friendLvl = 4;
+}
+
+message C2S_CONSORT_GIFT {
+  int64 consortId = 1;
+  int64 giftItemId = 2;
+  int64 giftItemNum = 3;
+}
+
+message S2C_CONSORT_GIFT {
+  int64 consortId = 1;
+  int64 friendExp = 2;
+  int64 friendLvl = 3;
+}
+
+message C2S_CONSORT_CARE {
+  int64 consortId = 1;
+  int64 careState = 2;
+}
+
+message S2C_CONSORT_CARE {
+  // careState: unknown field number
+}
+
+message C2S_CONSORT_STUDY_INFO {}
+
+message S2C_CONSORT_STUDY_INFO {
+  // studyInfo: unknown field number
+}
+
+message C2S_CONSORT_STUDY {
+  int64 consortId = 1;
+  int64 studyId = 2;
+  int64 studyLevel = 3;
+  int64 propertyId = 4;
+}
+
+message S2C_CONSORT_STUDY {
+  int64 consortId = 1;
+  int64 studyId = 2;
+  int64 studyLevel = 3;
+  int64 propertyId = 4;
+  int64 studyDuration = 5;
+  int64 studyBeginTime = 6;
+}
+
+message C2S_CONSORT_STUDY_END {
+  int64 consortId = 1;
+}
+
+message S2C_CONSORT_STUDY_END {
+  int64 consortId = 1;
+  int64 studyId = 2;
+  int64 studyLevel = 3;
+  int64 propertyId = 4;
+  int64 propertyExp = 5;
+  int64 propertyLvl = 6;
+  int64 lvl = 7;
+}
+
+message C2S_CONSORT_LIKE_GIFT {
+  int64 consortId = 1;
+}
+
+message S2C_CONSORT_LIKE_GIFT {
+  int64 consortId = 1;
+  // likeGift: unknown field number
+}
+
+message consort_hero_info {
+  int64 hid = 1;
+  int64 skinId = 2;
+}
+
+message seat_role_info {
+  int64 seatId = 1;
+  int64 consortId = 2;
+  int64 consortLvl = 3;
+  int64 consortFightSkillId = 4;
+  // roleInfo: unknown field number
+  int64 heroCombat = 6;
+  int64 roleCD = 7;
+  int64 seatCD = 8;
+  // heroes: unknown field number
+  int64 realCombat = 10;
+}
+
+message C2S_CONSORT_GARDEN_INFO {
+  int64 periodsId = 1;
+  int64 activityId = 2;
+}
+
+message S2C_CONSORT_GARDEN_INFO {
+  // seatRoleInfos: unknown field number
+  int64 roleCD = 2;
+  int64 maxSeatId = 3;
+  int64 endTime = 4;
+}
+
+message S2C_CONSORT_GARDEN_CHALLENGE {
+  // seatRoleInfos: unknown field number
+}
+
+message C2S_CONSORT_GARDEN_SEIZE_SIT {
+  int64 activityId = 1;
+  int64 seatId = 2;
+  int64 consortId = 3;
+}
+
+message S2C_CONSORT_GARDEN_SEIZE_SIT {
+  int64 isSuccess = 1;
+  // seatRoleInfos: unknown field number
+  int64 roleCD = 3;
+}
+
+message consort_garden_cross_history_rank {
+  int64 periods = 1;
+  // rankingInfo: unknown field number
+  // roles: unknown field number
+  int64 taked = 4;
+  int64 order = 5;
+}
+
+message C2S_CONSORT_GARDEN_CROSS_HISTORY_RANK {
+  int64 activityId = 1;
+}
+
+message S2C_CONSORT_GARDEN_CROSS_HISTORY_RANK {
+  int64 periods = 1;
+  // rankingInfo: unknown field number
+  // roles: unknown field number
+  int64 taked = 4;
+  int64 order = 5;
+}
+
+message consort_garden_pvp_actor_info {
+  int64 seatId = 1;
+  int64 consortId = 2;
+  // roleInfo: unknown field number
+}
+
+message consort_garden_pvp_record {
+  // defender: unknown field number
+  // challenger: unknown field number
+  int64 createTime = 3;
+  int64 success = 4;
+}
+
+message C2S_CONSORT_GARDEN_PVP_RECORD {
+  int64 activityId = 1;
+}
+
+message S2C_CONSORT_GARDEN_PVP_RECORD {
+  // records: unknown field number
+}
+
+message C2S_CONSORT_CRIME_GAME_INFO {}
+
+message S2C_CONSORT_CRIME_GAME_INFO {
+  // npcLabels: unknown field number
+  // labels: unknown field number
+  int64 state = 3;
+  int64 cdEndTime = 4;
+  int64 murdererId = 5;
+  // identifyMurdererIds: unknown field number
+}
+
+message C2S_CONSORT_CRIME_GAME_IDENTITY {
+  int64 murdererId = 1;
+}
+
+message S2C_CONSORT_CRIME_GAME_IDENTITY {
+  int64 murdererId = 1;
+  int64 isSuccess = 2;
+  int64 cdEndTime = 3;
+  // labels: unknown field number
+  // identifyMurdererIds: unknown field number
+}
+
+message C2S_CONSORT_CRIME_GAME_GET_REWARD {}
+
+message S2C_CONSORT_CRIME_GAME_GET_REWARD {}
+
+message C2S_CONSORT_HOSPITAL_GAME_INFO {}
+
+message S2C_CONSORT_HOSPITAL_GAME_INFO {
+  int64 npcId = 1;
+  int64 questionId = 2;
+  int64 cdEndTime = 3;
+  // answerIds: unknown field number
+}
+
+message C2S_CONSORT_HOSPITAL_GAME_ANSWER {
+  int64 answerId = 1;
+}
+
+message S2C_CONSORT_HOSPITAL_GAME_ANSWER {
+  int64 isSuccess = 1;
+  int64 cdEndTime = 2;
+  int64 answerId = 3;
+  int64 realAnswerId = 4;
+}

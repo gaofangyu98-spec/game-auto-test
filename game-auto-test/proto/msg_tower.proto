@@ -1,0 +1,81 @@
+syntax = "proto3";
+package msg_tower;
+
+message tower_hero_info {
+  int64 hid = 1;
+  int64 level = 2;
+  int64 star = 3;
+  int64 power = 4;
+  int64 skinId = 5;
+}
+
+message TOWER_DATA {
+  int64 planetType = 1;
+  int64 level = 2;
+  int64 rid = 3;
+  int64 lv = 4;
+  int64 head = 5;
+  int64 headFrame = 6;
+  int64 vipLv = 7;
+  int64 factoryAdd = 8;
+  int64 reward = 9;
+  int64 isRobot = 10;
+  string name = 11;
+  int64 value = 12;
+}
+
+message BATTLE_REPORT {
+  int64 rid = 1;
+  int64 lv = 2;
+  int64 head = 3;
+  int64 headFrame = 4;
+  int64 vipLv = 5;
+  int64 isSuccess = 6;
+  int64 ts = 7;
+  string name = 8;
+  int64 heroNum = 9;
+}
+
+message C2S_TOWER_INFO {}
+
+message S2C_TOWER_INFO {
+  int64 planetType = 1;
+  int64 level = 2;
+  int64 factoryAdd = 3;
+  int64 dailyReward = 4;
+  // towerData: unknown field number
+  int64 hisTowerId = 6;
+  int64 hisLevel = 7;
+}
+
+message C2S_TOWER_BATTLE {
+  int64 planetType = 1;
+  int64 level = 2;
+}
+
+message S2C_TOWER_BATTLE {
+  int64 planetType = 1;
+  int64 level = 2;
+  int64 factoryAdd = 3;
+  int64 dailyReward = 4;
+  // items: unknown field number
+  int64 towerResult = 6;
+  int64 hisTowerId = 7;
+  int64 hisLevel = 8;
+  // heros: unknown field number
+}
+
+message C2S_TOWER_BATTLE_REPORT {}
+
+message S2C_TOWER_BATTLE_REPORT {
+  // battleReport: unknown field number
+}
+
+message C2S_TOWER_RANKING_INFO {
+  int64 planetType = 1;
+}
+
+message S2C_TOWER_RANKING_INFO {
+  // towerData: unknown field number
+  int64 status = 2;
+}

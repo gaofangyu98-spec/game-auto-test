@@ -1,0 +1,73 @@
+syntax = "proto3";
+package msg_recharge;
+
+message RECHARGE_INFO {
+  int64 rechargeId = 1;
+  int64 isDouble = 2;
+}
+
+message VIP_REWARD {
+  int64 itemId = 1;
+  int64 itemCount = 2;
+}
+
+message C2S_RECHARGE_INFO {}
+
+message S2C_RECHARGE_INFO {
+  // rechargeInfo: unknown field number
+  int64 vipExp = 2;
+  int64 vipLv = 3;
+  // vipStatue: unknown field number
+}
+
+message C2S_CARD_GET_REWARD {
+  int64 cardType = 1;
+}
+
+message S2C_CARD_GET_REWARD {}
+
+message C2S_GET_VIP_LEVEL_REWARD {
+  int64 level = 1;
+}
+
+message S2C_GET_VIP_LEVEL_REWARD {
+  // item: unknown field number
+}
+
+message C2S_RECHARGE_CREATE_ORDER {
+  int64 rechargeId = 1;
+  string rechargeName = 2;
+  string extends = 3;
+  int64 isDaibi2 = 4;
+}
+
+message S2C_RECHARGE_CREATE_ORDER {
+  int64 rechargeId = 1;
+  string orderNo = 2;
+  string token = 3;
+  string extends = 4;
+}
+
+message S2C_RECHARGE_DELIVE {
+  int64 rechargeId = 1;
+  int64 code = 2;
+  string extends = 3;
+}
+
+message recharge_config_item {
+  int64 id = 1;
+  string balance = 2;
+}
+
+message C2S_RECHARGE_CONFIG_LIST {}
+
+message S2C_RECHARGE_CONFIG_LIST {
+  // configs: unknown field number
+  // priceMap: unknown field number
+}
+
+message C2S_RECHARGE_DAIBI2_WALLET {}
+
+message S2C_RECHARGE_DAIBI2_WALLET {
+  // wallet: unknown field number
+}

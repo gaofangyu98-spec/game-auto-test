@@ -3,20 +3,34 @@ __pycache__/
 *.pyc
 *.pyo
 *.egg-info/
+dist/
+build/
 
 # IDE
 .idea/
 .vscode/
+*.swp
+*.swo
 
 # 测试产物
+.pytest_cache/
+.coverage
+htmlcov/
 reports/*.log
 reports/*.txt
-.pytest_cache/
+reports/*.html
+allure-results/
+allure-report/
 
-# 环境配置（含账号密码，不提交）
+# 公司配表和原始协议（机密，不提交）
+sql/
+proto/*.proto
+
+# 敏感配置（含账号密码）
 .env
+.env.local
 config/local_settings.py
 
-# OS
+# 系统
 Thumbs.db
 .DS_Store

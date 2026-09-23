@@ -1,0 +1,26 @@
+syntax = "proto3";
+package msg_function_open;
+
+message function_item_detail {
+  int64 tid = 1;
+  int64 r = 2;
+  int64 c = 3;
+}
+
+message function_item {
+  int64 fid = 1;
+  int64 open = 2;
+  // ds: unknown field number
+}
+
+message function_show_item {
+  int64 fid = 1;
+  int64 open = 2;
+}
+
+message C2S_FUNCTION_OPEN_LIST {}
+
+message S2C_FUNCTION_OPEN_LIST {
+  // items: unknown field number
+  // shows: unknown field number
+}

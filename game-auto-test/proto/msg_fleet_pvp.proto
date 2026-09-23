@@ -1,0 +1,150 @@
+syntax = "proto3";
+package msg_fleet_pvp;
+
+message pvp_hero_info {
+  int64 hid = 1;
+  int64 lv = 2;
+  int64 star = 3;
+  int64 sword = 4;
+  int64 activeTalent = 5;
+  int64 activeTalentLv = 6;
+  int64 remainTimes = 7;
+  int64 recoverTimes = 8;
+  int64 recoverAt = 9;
+  int64 challengeRemainTimes = 10;
+  int64 skin = 11;
+  int64 elv = 12;
+}
+
+message pvp_hero_list {
+  // heroes: unknown field number
+}
+
+message pvp_fight_info {
+  // defender: unknown field number
+  // defenderHeroes: unknown field number
+  int64 inspireCount = 3;
+  // fighterHeroes: unknown field number
+  int64 type = 5;
+  int64 times = 6;
+}
+
+message pvp_preset_team {
+  int64 slot = 1;
+  // hids: unknown field number
+}
+
+message C2S_ROLE_PVP_INFO {}
+
+message S2C_ROLE_PVP_INFO {
+  // heroTimes: unknown field number
+  // info: unknown field number
+  // presetTeams: unknown field number
+  int64 presetMaxCount = 4;
+}
+
+message C2S_PVP_PRESET_SAVE {
+  int64 slot = 1;
+  // hids: unknown field number
+}
+
+message S2C_PVP_PRESET_SAVE {
+  // team: unknown field number
+}
+
+message C2S_PVP_READY {
+  // hids: unknown field number
+  int64 type = 2;
+  int64 times = 3;
+  int64 specificRid = 4;
+}
+
+message S2C_PVP_READY {
+  // info: unknown field number
+}
+
+message C2S_PVP_ADD_POWER {
+  int64 times = 1;
+}
+
+message S2C_PVP_ADD_POWER {
+  int64 inspireCount = 1;
+}
+
+message C2S_PVP_FIGHT {
+  int64 source = 1;
+}
+
+message S2C_PVP_FIGHT {
+  int64 result = 1;
+  int64 beatCount = 2;
+  // items: unknown field number
+  int64 myScoreChange = 4;
+  int64 enemyScoreChange = 5;
+  int64 baiRenZhanBase = 6;
+  int64 baiRenZhanEveryOne = 7;
+  int64 source = 8;
+  int64 code = 9;
+}
+
+message pvp_record_multi {
+  int64 ts = 1;
+  int64 beatCount = 2;
+  int64 score = 3;
+}
+
+message pvp_record {
+  // mainRole: unknown field number
+  string otherRoleName = 5;
+  // detail: unknown field number
+}
+
+message C2S_PVP_RECORD {
+  int64 type = 1;
+}
+
+message S2C_PVP_RECORD {
+  int64 type = 1;
+  // records: unknown field number
+}
+
+message factory_base_info {
+  int64 ratio = 1;
+  int64 eff = 2;
+  int64 limitTime = 3;
+}
+
+message C2S_ROLE_PVP_FACTORY {}
+
+message S2C_ROLE_PVP_FACTORY {
+  int64 level = 1;
+  int64 storeTime = 2;
+  int64 storeSilver = 3;
+  // curInfo: unknown field number
+  // nextInfo: unknown field number
+  // costItem: unknown field number
+  int64 currentItemNum = 7;
+}
+
+message C2S_GET_PVP_FACTORY {
+  int64 source = 1;
+}
+
+message S2C_GET_PVP_FACTORY {
+  // getItem: unknown field number
+  int64 source = 2;
+  // items: unknown field number
+  int64 code = 4;
+}
+
+message C2S_UPGRADE_PVP_FACTORY {}
+
+message S2C_UPGRADE_PVP_FACTORY {
+  int64 level = 1;
+  int64 storeTime = 2;
+  int64 storeSilver = 3;
+  // curInfo: unknown field number
+  // nextInfo: unknown field number
+  // costItem: unknown field number
+  int64 currentItemNum = 7;
+}

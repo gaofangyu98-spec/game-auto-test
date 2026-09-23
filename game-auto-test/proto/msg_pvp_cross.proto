@@ -1,0 +1,108 @@
+syntax = "proto3";
+package msg_pvp_cross;
+
+message pvp_hero_info_cross {
+  int64 hid = 1;
+  int64 level = 2;
+  int64 star = 3;
+  int64 power = 4;
+  int64 activeTalent = 5;
+  int64 activeTalentLv = 6;
+  int64 remainTimes = 7;
+  int64 recoverTimes = 8;
+  int64 recoverAt = 9;
+  int64 skin = 10;
+  int64 elv = 11;
+}
+
+message pvp_fight_info_cross {
+  // defender: unknown field number
+  // defenderHeroes: unknown field number
+  int64 inspireCount = 3;
+  // fighterHeroes: unknown field number
+}
+
+message C2S_PVP_CROSS_STATUS {}
+
+message S2C_PVP_CROSS_STATUS {
+  int64 open = 1;
+  int64 beginAt = 2;
+  int64 endAt = 3;
+  // gs: unknown field number
+}
+
+message C2S_ROLE_PVP_INFO_CROSS {}
+
+message S2C_ROLE_PVP_INFO_CROSS {
+  // heroTimes: unknown field number
+  // info: unknown field number
+}
+
+message C2S_PVP_READY_CROSS {
+  // hids: unknown field number
+}
+
+message S2C_PVP_READY_CROSS {
+  // info: unknown field number
+}
+
+message C2S_PVP_ADD_POWER_CROSS {
+  int64 times = 1;
+}
+
+message S2C_PVP_ADD_POWER_CROSS {
+  int64 inspireCount = 1;
+}
+
+message C2S_PVP_FIGHT_CROSS {}
+
+message S2C_PVP_FIGHT_CROSS {
+  int64 result = 1;
+  int64 beatCount = 2;
+  // items: unknown field number
+  int64 myScoreChange = 4;
+  int64 enemyScoreChange = 5;
+}
+
+message pvp_record_multi_cross {
+  int64 ts = 1;
+  int64 beatCount = 2;
+  int64 score = 3;
+}
+
+message pvp_record_cross {
+  // mainRole: unknown field number
+  string otherRoleName = 5;
+  // detail: unknown field number
+}
+
+message C2S_PVP_RECORD_CROSS {}
+
+message S2C_PVP_RECORD_CROSS {
+  // records: unknown field number
+}
+
+message pvp_cross_history_rank {
+  int64 periods = 1;
+  // rankingInfo: unknown field number
+  // roles: unknown field number
+  int64 taked = 4;
+  int64 order = 5;
+}
+
+message C2S_PVP_CROSS_HISTORY_RANK {}
+
+message S2C_PVP_CROSS_HISTORY_RANK {
+  // ranks: unknown field number
+}
+
+message C2S_PVP_CROSS_HISTORY_RANK_TAKE {
+  int64 periods = 1;
+}
+
+message S2C_PVP_CROSS_HISTORY_RANK_TAKE {
+  int64 periods = 1;
+  int64 taked = 2;
+  // items: unknown field number
+  // rankingInfo: unknown field number
+}

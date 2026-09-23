@@ -1,0 +1,51 @@
+syntax = "proto3";
+package msg_ai_gift;
+
+message Item {
+  int64 itemid = 1;
+  int64 itemnum = 2;
+}
+
+message BackGround {
+  int64 enabled = 1;
+  string backGround = 2;
+}
+
+message ai_gift {
+  string id = 1;
+  int64 vipPoints = 2;
+  int64 amountToDiamond = 3;
+  string price = 4;
+  int64 duration = 5;
+  int64 purchaseLimitAmount = 6;
+  int64 isAISupported = 7;
+  // items: unknown field number
+  // backGround: unknown field number
+  int64 rid = 10;
+  int64 templateId = 11;
+  int64 overTime = 12;
+  int64 status = 13;
+  int64 priceValueRatio = 14;
+  int64 rechargeId = 15;
+  int64 buyNum = 16;
+  string PurchaseLimitType = 17;
+  string giftName = 18;
+}
+
+message S2C_SYNC_SHOW_AI_GIFT {
+  // giftInfo: unknown field number
+}
+
+message C2S_AI_GIFT_LIST {}
+
+message S2C_AI_GIFT_LIST {
+  // infos: unknown field number
+}
+
+message C2S_FREE_GIFT_TAKE {
+  string id = 1;
+}
+
+message S2C_FREE_GIFT_TAKE {
+  string id = 1;
+}

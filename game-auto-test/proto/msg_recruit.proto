@@ -1,0 +1,8 @@
+syntax = "proto3";
+package msg_recruit;
+
+message C2S_RECRUIT_HERO {
+  int64 id = 1;
+}
+
+message S2C_RECRUIT_HERO {}

@@ -1,0 +1,58 @@
+syntax = "proto3";
+package msg_task;
+option go_package = "./../../pb";
+
+import "msg_common.proto";
+
+// 任务
+message USER_TASK {
+    int32 task_id        = 1;  // 任务Id
+    int64 progress       = 2;  // 进度值
+    bool is_finish       = 3;  // 是否完成
+    int64 data           = 4;  // 进度附加值
+    repeated string args = 5;  // 参数 1 任务类型 2 参数 3 奖励 4 分页
+}
+
+// message C2S_SYNC_TASK_INFO{
+// }
+message S2C_SYNC_TASK_INFO {
+    USER_TASK task_info = 1;  //
+    int32 type          = 2;
+}
+
+// 任务列表
+message C2S_TASK_LIST {
+    int32 type = 1;  // 请示任务列表 1 主线 2 日常 3 成就
+}
+message S2C_TASK_LIST {
+    repeated USER_TASK tasks           = 1;  // 任务列表
+    int32 activity                     = 2;  // 日常任务活跃度
+    repeated int32 activity_reward_get = 3;  // 日常任务活跃度 已领取的阶段
+    int32 type                         = 4;  // 请示任务列表 1 主线 2 日常 3 成就 4 七日福利 5 BP任务 6 主题活动-战舰击陨石  7 主题活动-射击 14 节日BP任务 15 插花每日 16 插花成就 17 试毒每日 18 试毒成就
+}
+
+// 领取任务奖励
+message C2S_TASK_GET_REWARD {
+    int32 task_id = 1;  // 任务Id
+    int32 type    = 2;  // 任务类型
+    int32 source  = 3;  // assistant.xlsx id；玩家手动领取填 0
+}
+message S2C_TASK_GET_REWARD {
+    USER_TASK next_task                   = 1;
+    repeated int32 task_id                = 2;  // 任务Id
+    int32 activity                        = 3;  // 日常任务活跃度
+    int32 type                            = 4;  // 类型
+    int32 source                          = 5;  // assistant.xlsx id；玩家手动领取填 0
+    repeated msg_common.common_item items  = 6;  // 本次获得道具
+    int32 code                            = 7;  // 0成功 1失败（助手吞错时）
+}
+
+// 领取活跃度奖励
+message C2S_TASK_ACTIVITY_GET_REWARD {
+    int32 index = 1;  // 索引
+    int32 type  = 2;  // 任务类型
+}
+message S2C_TASK_ACTIVITY_GET_REWARD {
+    repeated int32 activity_reward_get = 1;  // 日常任务活跃度 已领取的阶段
+    int32 type                         = 2;  // 任务类型
+}

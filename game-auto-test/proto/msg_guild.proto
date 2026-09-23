@@ -1,0 +1,661 @@
+syntax = "proto3";
+package msg_guild;
+
+message guild_setting {
+  int64 minLv = 1;
+  int64 randomlyJoin = 2;
+  int64 orderBySword = 3;
+}
+
+message guild_info {
+  int64 id = 1;
+  int64 icon = 2;
+  string name = 3;
+  int64 lv = 4;
+  string master = 5;
+  int64 sword = 6;
+  int64 memberCount = 7;
+  int64 exp = 8;
+  int64 gold = 9;
+  string notice = 10;
+  int64 memberMaxCount = 11;
+  // setting: unknown field number
+  int64 coolTime = 14;
+  int64 traderOverTime = 15;
+}
+
+message guild_rank_item {
+  // info: unknown field number
+  int64 rank = 2;
+  int64 canJoin = 3;
+}
+
+message C2S_GUILD_CREATE_INFO {}
+
+message S2C_GUILD_CREATE_INFO {
+  int64 gold = 1;
+  // guildId: unknown field number
+}
+
+message C2S_GUILD_CREATE {
+  int64 icon = 1;
+  string name = 2;
+  int64 allowRandom = 3;
+}
+
+message S2C_GUILD_CREATE {
+  // info: unknown field number
+}
+
+message C2S_GUILD_RANDOMLY_JOIN {}
+
+message S2C_GUILD_RANDOMLY_JOIN {
+  // info: unknown field number
+}
+
+message C2S_GUILD_SEARCH_BY_ID {
+  int64 id = 1;
+}
+
+message S2C_GUILD_SEARCH_BY_ID {
+  // info: unknown field number
+}
+
+message C2S_GUILD_JOIN_BY_ID {
+  int64 id = 1;
+}
+
+message S2C_GUILD_JOIN_BY_ID {}
+
+message C2S_GUILD_RANK {
+  int64 page = 1;
+  int64 randId = 2;
+}
+
+message S2C_GUILD_RANK {
+  // items: unknown field number
+  int64 page = 2;
+}
+
+message C2S_GUILD_INFO {}
+
+message S2C_GUILD_INFO {
+  // info: unknown field number
+  // icons: unknown field number
+  // itemInfo: unknown field number
+  int64 modifyCount = 4;
+}
+
+message C2S_GUILD_CHANGE_ICON {
+  int64 icon = 2;
+}
+
+message S2C_GUILD_CHANGE_ICON {
+  int64 icon = 1;
+}
+
+message C2S_GUILD_CHANGE_NAME {
+  string name = 1;
+}
+
+message S2C_GUILD_CHANGE_NAME {
+  string name = 2;
+}
+
+message C2S_GUILD_CHANGE_NOTICE {
+  string notice = 1;
+}
+
+message S2C_GUILD_CHANGE_NOTICE {
+  string notice = 2;
+}
+
+message C2S_GUILD_DISMISS {}
+
+message S2C_GUILD_DISMISS {}
+
+message C2S_GUILD_QUIT {}
+
+message S2C_GUILD_QUIT {}
+
+message guild_member_item {
+  int64 id = 1;
+  int64 icon = 2;
+  int64 role = 3;
+  string name = 4;
+  int64 lv = 5;
+  int64 vipLv = 6;
+  int64 sword = 7;
+  int64 joinTime = 8;
+  int64 headFrame = 9;
+  int64 lastLoginAt = 10;
+}
+
+message guild_member_list_item {
+  // info: unknown field number
+  int64 todayContribution = 2;
+  int64 historyContribution = 3;
+}
+
+message C2S_GUILD_MEMBERS {
+  int64 guildId = 1;
+}
+
+message S2C_GUILD_MEMBERS {
+  // members: unknown field number
+  int64 guildId = 2;
+}
+
+message C2S_GUILD_KICK_OUT {
+  int64 rid = 1;
+}
+
+message S2C_GUILD_KICK_OUT {
+  int64 rid = 1;
+  int64 memberCount = 2;
+}
+
+message C2S_GUILD_SET_ROLE {
+  int64 rid = 1;
+  int64 sid = 2;
+}
+
+message S2C_GUILD_SET_ROLE {
+  int64 rid = 1;
+  int64 sid = 2;
+  int64 oldMasterId = 3;
+  int64 oldMasterSid = 4;
+}
+
+message C2S_GUILD_AUTH_LIST {}
+
+message S2C_GUILD_AUTH_LIST {
+  // members: unknown field number
+}
+
+message C2S_GUILD_AUTH {
+  int64 rid = 1;
+  int64 accpet = 2;
+}
+
+message S2C_GUILD_AUTH {
+  int64 rid = 1;
+  int64 memberCount = 2;
+}
+
+message C2S_GUILD_AUTH_DENIED_ALL {}
+
+message S2C_GUILD_AUTH_DENIED_ALL {}
+
+message C2S_GUILD_AUTH_SETTING {
+  // setting: unknown field number
+}
+
+message S2C_GUILD_AUTH_SETTING {
+  // setting: unknown field number
+}
+
+message guild_build_item {
+  int64 id = 1;
+  int64 status = 2;
+  int64 expireAt = 3;
+  int64 count = 4;
+}
+
+message guild_build_gift {
+  int64 id = 1;
+  int64 status = 2;
+}
+
+message C2S_GUILD_BUILD_LIST {}
+
+message S2C_GUILD_BUILD_LIST {
+  // items: unknown field number
+  int64 progress = 2;
+  // gifts: unknown field number
+  int64 todayBuildMemberCount = 4;
+}
+
+message C2S_GUILD_BUILD {
+  int64 id = 1;
+  int64 source = 2;
+}
+
+message S2C_GUILD_BUILD {
+  // item: unknown field number
+  int64 progress = 2;
+  // gifts: unknown field number
+  int64 exp = 4;
+  int64 gold = 5;
+  int64 level = 6;
+  int64 todayBuildMemberCount = 7;
+  int64 source = 8;
+  // items: unknown field number
+  int64 code = 10;
+}
+
+message C2S_GUILD_TAKE_BUILD_GIFT {
+  int64 id = 1;
+  int64 source = 2;
+}
+
+message S2C_GUILD_TAKE_BUILD_GIFT {
+  // gifts: unknown field number
+  int64 source = 4;
+  // items: unknown field number
+  int64 code = 6;
+}
+
+message guild_factory_user_item {
+  int64 hid = 1;
+  string name = 2;
+  int64 role = 3;
+  int64 addition = 4;
+}
+
+message guild_factory_item {
+  int64 totalAddition = 1;
+  // items: unknown field number
+}
+
+message guild_factory {
+  // factoryItem: unknown field number
+  int64 additionTotal = 2;
+  int64 yourHid = 3;
+  int64 addSword = 4;
+}
+
+message C2S_GUILD_FACTORY_LIST {}
+
+message S2C_GUILD_FACTORY_LIST {
+  // info: unknown field number
+}
+
+message C2S_GUILD_FACTORY_SET_HERO {
+  int64 hid = 1;
+}
+
+message S2C_GUILD_FACTORY_SET_HERO {
+  // info: unknown field number
+}
+
+message guild_explore_item {
+  int64 id = 1;
+  int64 status = 2;
+  int64 arriveAt = 3;
+  int64 sword = 4;
+}
+
+message guild_explore_hero {
+  int64 heroId = 1;
+  int64 sword = 2;
+  int64 pos = 3;
+  int64 time = 4;
+  // rewards: unknown field number
+}
+
+message guild_explore_member {
+  // info: unknown field number
+  // heroList: unknown field number
+}
+
+message guild_explore_event {
+  string name = 1;
+  int64 eventId = 2;
+  int64 itemId = 3;
+  int64 itemNum = 4;
+  int64 time = 5;
+}
+
+message C2S_GUILD_EXPLORE_LIST {}
+
+message S2C_GUILD_EXPLORE_LIST {
+  // explores: unknown field number
+  // heroList: unknown field number
+}
+
+message C2S_GUILD_EXPLORE {
+  int64 id = 1;
+  int64 way = 2;
+}
+
+message S2C_GUILD_EXPLORE {
+  // explore: unknown field number
+  int64 gold = 2;
+}
+
+message C2S_GUILD_EXPLORE_SEND_HERO {
+  int64 id = 1;
+  // hids: unknown field number
+}
+
+message S2C_GUILD_EXPLORE_SEND_HERO {
+  // explore: unknown field number
+  // members: unknown field number
+}
+
+message C2S_GUILD_EXPLORE_TEAM {
+  int64 id = 1;
+}
+
+message S2C_GUILD_EXPLORE_TEAM {
+  // members: unknown field number
+  // eventInfos: unknown field number
+}
+
+message guild_trend_item {
+  int64 createAt = 1;
+  string name = 2;
+  int64 tid = 3;
+  string params = 4;
+}
+
+message C2S_GUILD_TRENDS {}
+
+message S2C_GUILD_TRENDS {
+  // trends: unknown field number
+}
+
+message S2C_SYNC_SHOW_GUILD_NOTICE {}
+
+message C2S_GUILD_DO_DISMISS {}
+
+message S2C_GUILD_DO_DISMISS {
+  int64 coolTime = 1;
+}
+
+message C2S_GUILD_CANCEL_DISMISS {}
+
+message S2C_GUILD_CANCEL_DISMISS {}
+
+message S2C_SYNC_GUILD_LEVEL {
+  int64 level = 1;
+}
+
+message C2S_GUILD_OPERATE_INFO {}
+
+message S2C_GUILD_OPERATE_INFO {
+  int64 opId = 1;
+  int64 opValue = 2;
+  int64 times = 3;
+}
+
+message guild_member_operate_info {
+  // info: unknown field number
+  int64 todayCount = 2;
+  int64 historyCount = 3;
+}
+
+message C2S_GUILD_OPERATE_RECORD {}
+
+message S2C_GUILD_OPERATE_RECORD {
+  // infos: unknown field number
+}
+
+message C2S_GUILD_OPERATE_REQUEST {
+  int64 opType = 1;
+  int64 count = 2;
+  int64 source = 3;
+}
+
+message S2C_GUILD_OPERATE_REQUEST {
+  int64 count = 1;
+  int64 source = 2;
+  // items: unknown field number
+  int64 code = 4;
+}
+
+message S2C_SYNC_GUILD_OPERATE_NOTIFY {
+  int64 opId = 1;
+  int64 opValue = 2;
+  int64 traderOverTime = 3;
+}
+
+message trader_cut_record {
+  string name = 1;
+  int64 num = 2;
+}
+
+message trader_not_cut_info {
+  string name = 1;
+  int64 vipLv = 2;
+  int64 sword = 3;
+  int64 joinTime = 4;
+  int64 lastLoginTime = 5;
+}
+
+message C2S_GUILD_TRADER_INFO {}
+
+message S2C_GUILD_TRADER_INFO {
+  int64 traderId = 1;
+  int64 curPrice = 2;
+  int64 cut = 3;
+  // infos: unknown field number
+  int64 buy = 5;
+}
+
+message C2S_GUILD_TRADER_CUT {}
+
+message S2C_GUILD_TRADER_CUT {}
+
+message C2S_GUILD_TRADER_BUY {}
+
+message S2C_GUILD_TRADER_BUY {}
+
+message C2S_GUILD_TRADER_NOT_CUT_INFO {}
+
+message S2C_GUILD_TRADER_NOT_CUT_INFO {
+  // infos: unknown field number
+}
+
+message S2C_SYNC_GUILD_TRADER_NOTIFY {
+  int64 curPrice = 1;
+  // info: unknown field number
+}
+
+message travel_info {
+  int64 pos = 1;
+  int64 cid = 2;
+  int64 overTime = 3;
+  int64 status = 4;
+  int64 eventId = 5;
+  // ships: unknown field number
+  int64 fightCount = 7;
+  int64 id = 8;
+  int64 createTime = 9;
+  int64 path = 10;
+  // robRids: unknown field number
+  int64 eventNpcId = 12;
+}
+
+message travel_warship {
+  int64 id = 1;
+  int64 atk = 2;
+  int64 def = 3;
+  int64 fightUsedCount = 4;
+}
+
+message C2S_GUILD_TRAVEL_INFO {}
+
+message S2C_GUILD_TRAVEL_INFO {
+  // infos: unknown field number
+}
+
+message C2S_GUILD_TRAVEL_POS_INFO {
+  int64 pos = 1;
+}
+
+message S2C_GUILD_TRAVEL_POS_INFO {
+  // travelIds: unknown field number
+}
+
+message C2S_GUILD_TRAVEL_SELECT {
+  int64 pos = 1;
+  int64 cid = 2;
+  int64 source = 3;
+}
+
+message S2C_GUILD_TRAVEL_SELECT {
+  int64 source = 1;
+  int64 code = 2;
+}
+
+message C2S_GUILD_TRAVEL_BEGIN {
+  int64 pos = 1;
+  int64 cid = 2;
+  // shipIds: unknown field number
+  int64 source = 4;
+}
+
+message S2C_GUILD_TRAVEL_BEGIN {
+  // info: unknown field number
+  int64 source = 2;
+  int64 code = 3;
+}
+
+message S2C_SYNC_GUILD_TRAVEL_EVENT {
+  int64 eventId = 1;
+  int64 pos = 2;
+  int64 eventNpcId = 3;
+}
+
+message C2S_GUILD_TRAVEL_GET_REWARD {
+  int64 pos = 1;
+  int64 source = 2;
+}
+
+message S2C_GUILD_TRAVEL_GET_REWARD {
+  int64 source = 1;
+  // items: unknown field number
+  int64 code = 3;
+}
+
+message C2S_GUILD_TRAVEL_EVENT_RESULT {
+  int64 pos = 1;
+  int64 option = 2;
+  int64 source = 3;
+}
+
+message S2C_GUILD_TRAVEL_EVENT_RESULT {
+  // items: unknown field number
+  // result: unknown field number
+  int64 win = 3;
+  int64 eventNpcId = 4;
+  int64 eventType = 5;
+  int64 source = 6;
+  int64 code = 7;
+}
+
+message S2C_SYNC_GUILD_TRAVEL_REWARD {
+  // items: unknown field number
+  // shipIds: unknown field number
+}
+
+message search_travel_info {
+  int64 id = 1;
+  int64 icon = 2;
+  int64 headFrame = 3;
+  int64 lv = 4;
+  string name = 5;
+  string guildName = 6;
+  int64 vipLv = 8;
+  // travelInfos: unknown field number
+}
+
+message C2S_GUILD_TRAVEL_DASH_BOARD {}
+
+message S2C_GUILD_TRAVEL_DASH_BOARD {
+  // infos: unknown field number
+  // warships: unknown field number
+  // mineInfos: unknown field number
+}
+
+message C2S_GUILD_TRAVEL_DASH_BOARD_REFRESH {}
+
+message S2C_GUILD_TRAVEL_DASH_BOARD_REFRESH {
+  // infos: unknown field number
+}
+
+message C2S_GUILD_TRAVEL_SEARCH {}
+
+message S2C_GUILD_TRAVEL_SEARCH {
+  // infos: unknown field number
+}
+
+message fight_result {
+  // mine: unknown field number
+  // enemy: unknown field number
+  int64 result = 3;
+}
+
+message C2S_GUILD_TRAVEL_FIGHT {
+  int64 travelId = 1;
+  int64 rid = 2;
+  // warships: unknown field number
+  int64 reportId = 4;
+}
+
+message S2C_GUILD_TRAVEL_FIGHT {
+  // result: unknown field number
+  // warships: unknown field number
+  string enemyName = 3;
+}
+
+message fight_report {
+  int64 reportId = 1;
+  // suffer: unknown field number
+  // enemy: unknown field number
+  int64 status = 5;
+  int64 travelCid = 6;
+  int64 attTravelId = 7;
+  int64 createdAt = 8;
+}
+
+message C2S_GUILD_TRAVEL_FIGHT_REPORT {
+  int64 cid = 1;
+}
+
+message S2C_GUILD_TRAVEL_FIGHT_REPORT {
+  int64 cid = 1;
+  // reports: unknown field number
+}
+
+message C2S_GUILD_TRAVEL_SPEED_UP {
+  int64 pos = 1;
+  int64 num = 2;
+}
+
+message S2C_GUILD_TRAVEL_SPEED_UP {
+  int64 pos = 1;
+  int64 time = 2;
+}
+
+message rank_info {
+  string name = 1;
+  int64 value = 2;
+}
+
+message C2S_GUILD_TRAVEL_LOOK_INFO {
+  int64 gid = 1;
+}
+
+message S2C_GUILD_TRAVEL_LOOK_INFO {
+  // infos: unknown field number
+}
+
+message warship_travel_info {
+  int64 id = 1;
+  int64 fightUsedCount = 2;
+  int64 travelUsedCount = 3;
+  int64 travelFreeCount = 4;
+}
+
+message C2S_GUILD_TRAVEL_WARSHIP_INFO {}
+
+message S2C_GUILD_TRAVEL_WARSHIP_INFO {
+  // infos: unknown field number
+}
+
+message S2C_SYNC_LEAVE_GUILD {
+  int64 opType = 1;
+}

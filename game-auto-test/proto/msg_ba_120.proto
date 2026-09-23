@@ -1,0 +1,13 @@
+syntax = "proto3";
+package msg_ba_120;
+
+message LUCKY_BAG_INFO {
+  int64 id = 1;
+  int64 times = 2;
+}
+
+message C2S_LUCKY_BAG_INFO {}
+
+message S2C_LUCKY_BAG_INFO {
+  // infos: unknown field number
+}

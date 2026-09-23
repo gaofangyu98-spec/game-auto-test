@@ -1,0 +1,42 @@
+syntax = "proto3";
+package msg_ma_201_205_rank;
+
+message MA_RANKING_INFO_ROLE {
+  int64 rid = 1;
+  int64 servId = 2;
+  int64 lv = 3;
+  int64 vipLv = 4;
+  int64 head = 5;
+  int64 headFrame = 6;
+  string name = 7;
+  int64 titleId = 8;
+  int64 skinId = 9;
+}
+
+message MA201_205_RANKING_INFO {
+  int64 v = 1;
+  // role: unknown field number
+}
+
+message C2S_MA201_205_RANKING_INFO {
+  int64 rankType = 1;
+}
+
+message S2C_MA201_205_RANKING_INFO {
+  // rankingInfo: unknown field number
+  int64 beginTs = 3;
+  int64 endTs = 4;
+  int64 mineScore = 5;
+  int64 mineRank = 6;
+  int64 giftTaked = 7;
+  int64 initScore = 8;
+}
+
+message C2S_MA201_205_TAKE_GIFT {
+  int64 rankType = 1;
+}
+
+message S2C_MA201_205_TAKE_GIFT {
+  int64 rankType = 1;
+  int64 giftTaked = 2;
+}

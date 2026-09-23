@@ -1,0 +1,67 @@
+syntax = "proto3";
+package msg_world_boss;
+
+message fight_boss_record {
+  // fightRole: unknown field number
+  int64 hurtValue = 2;
+  int64 isKill = 3;
+}
+
+message boss_hero_info {
+  int64 hid = 1;
+  int64 curCount = 2;
+  int64 limitCount = 3;
+  int64 hurtPct = 4;
+}
+
+message C2S_WORLD_BOSS_INFO {}
+
+message S2C_WORLD_BOSS_INFO {
+  int64 isOpen = 1;
+  int64 nextTime = 2;
+  int64 nextFightHeroId = 3;
+  // heroInfo: unknown field number
+  int64 confId = 5;
+  int64 bossMaxHp = 6;
+  int64 bossCurrentHp = 7;
+  // lastAttackRole: unknown field number
+}
+
+message C2S_FIGHT_WORLD_BOSS {
+  int64 heroId = 1;
+}
+
+message S2C_FIGHT_WORLD_BOSS {}
+
+message S2C_FIGHT_RESULT {
+  int64 isSuccess = 1;
+  int64 hurtValue = 2;
+  // getItem: unknown field number
+  // fightHero: unknown field number
+  int64 nextFightHeroId = 5;
+  // skills: unknown field number
+}
+
+message C2S_FIGHT_WORLD_BOSS_RECORD {
+  int64 max = 1;
+}
+
+message S2C_FIGHT_WORLD_BOSS_RECORD {
+  // records: unknown field number
+}
+
+message S2C_WORLD_BOSS_HP {
+  int64 beforeHp = 1;
+  int64 currentHp = 2;
+  // lastAttackRole: unknown field number
+}
+
+message S2C_WORLD_BOSS_OPEN {
+  int64 daySession = 1;
+}
+
+message S2C_WORLD_BOSS_OVER {}
+
+message S2C_SYNC_FIGHT_RECORD {
+  // records: unknown field number
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+package msg_marquee;
+
+message marquee_data {
+  int64 marqueeId = 1;
+  // marqueeContent: unknown field number
+  int64 intervals = 4;
+  int64 startAt = 5;
+  int64 endAt = 6;
+  int64 isActive = 7;
+}
+
+message S2C_MARQUEE_UPDATE {
+  // marquees: unknown field number
+}
+
+message C2S_MARQUEE_LIST {}
+
+message S2C_MARQUEE_LIST {
+  // marquees: unknown field number
+}

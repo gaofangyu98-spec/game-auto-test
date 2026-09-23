@@ -1,0 +1,47 @@
+syntax = "proto3";
+package msg_login;
+
+// 授权验证
+message C2S_AUTH {
+    string cuid     = 1;
+    int32 rid       = 2;  // 角色Id
+    int64 ts        = 3;
+    string token    = 4;  // Token
+    string lang     = 5;  // 语言
+    string currency = 6;  // 币种
+}
+message S2C_AUTH {
+    int64 server_ts = 1;  // 服务器当前时间戳
+    int32 time_zone = 2;  // 时区(毫秒)
+    bool is_created = 4;  // 是否创建角色
+    string name     = 6;
+    bool is_newbie  = 7;  // 是否新手
+}
+
+message C2S_INIT_ROLE {
+    int32 id    = 1;
+    string name = 2;
+}
+message S2C_INIT_ROLE {
+}
+
+message C2S_HEARTBEAT {
+}
+message S2C_HEARTBEAT {
+    int64 server_ts = 1;
+    int32 time_zone = 2;
+}
+
+message C2S_BAN_ACCOUNT {
+}
+message S2C_BAN_ACCOUNT {
+    int64 expire_time = 1;
+}
+
+message S2C_MULTI_DEVICE {
+}
+
+message C2S_ENTER_GAME_FINISH {
+}
+message S2C_ENTER_GAME_FINISH {
+}

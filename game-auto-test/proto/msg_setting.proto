@@ -1,0 +1,20 @@
+syntax = "proto3";
+package msg_setting;
+
+message C2S_EXCHANGE_CODE {
+  string code = 1;
+}
+
+message S2C_EXCHANGE_CODE {}
+
+message C2S_MONTH_SIGN_INFO {}
+
+message S2C_MONTH_SIGN_INFO {
+  int64 type = 1;
+  int64 signDays = 2;
+  int64 isDaySign = 3;
+}
+
+message C2S_MONTH_SIGN_SIGN {}
+
+message S2C_MONTH_SIGN_SIGN {}
