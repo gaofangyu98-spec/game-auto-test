@@ -23,14 +23,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r game-auto-test/requirements.txt
+          pip install pytest-html
 
       - name: Syntax check
         run: |
           python -m py_compile game-auto-test/api/*.py game-auto-test/client/*.py game-auto-test/config/*.py game-auto-test/tests/*.py
 
-      - name: Collect tests
+      - name: Generate test report
         run: |
-          cd game-auto-test && pytest --collect-only -q
+          cd game-auto-test && pytest --collect-only --html=../report.html --self-contained-html -q
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: report.html
+        if: always()
 
       - name: Feishu notify success
         if: success()
@@ -40,7 +48,7 @@ jobs:
             -d '{
               "msg_type": "text",
               "content": {
-                "text": "✅ CI 构建成功\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n耗时：${{ job.status }}"
+                "text": "✅ CI 构建成功\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n提交人：${{ github.actor }}\n耗时：${{ job.status }}"
               }
             }'
 
@@ -52,6 +60,6 @@ jobs:
             -d '{
               "msg_type": "text",
               "content": {
-                "text": "❌ CI 构建失败\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n快去修！"
+                "text": "❌ CI 构建失败\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n提交人：${{ github.actor }}\n快去修！"
               }
             }'
