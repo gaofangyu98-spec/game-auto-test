@@ -7,3 +7,5 @@ protobuf>=4.25
 openpyxl>=3.1
 
 pytest>=7.0
+
+pytest-html

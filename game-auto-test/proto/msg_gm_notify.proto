@@ -1,7 +1,0 @@
-syntax = "proto3";
-package msg_gm_notify;
-
-message S2C_SERVER_FORCE_NOTIFY {
-  int64 notifyType = 1;
-  string notifyParam = 2;
-}

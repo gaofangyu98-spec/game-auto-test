@@ -22,16 +22,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r game-auto-test/requirements.txt
+          pip install -r requirements.txt
           pip install pytest-html
 
       - name: Syntax check
         run: |
-          python -m py_compile game-auto-test/api/*.py game-auto-test/client/*.py game-auto-test/config/*.py game-auto-test/tests/*.py
+          python -m py_compile api/*.py client/*.py config/*.py tests/*.py
 
       - name: Generate test report
         run: |
-          cd game-auto-test && pytest --collect-only --html=../report.html --self-contained-html -q
+          pytest --collect-only --html=report.html --self-contained-html -q
 
       - name: Upload test report
         uses: actions/upload-artifact@v4

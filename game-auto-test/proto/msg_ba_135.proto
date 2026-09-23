@@ -1,8 +1,0 @@
-syntax = "proto3";
-package msg_ba_135;
-
-message C2S_BA135_DASHBOARD {}
-
-message S2C_BA135_DASHBOARD {
-  int64 recharged = 1;
-}
