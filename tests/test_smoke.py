@@ -12,6 +12,8 @@ from api.shop_api import ShopAPI
 from api.activity_api import ActivityAPI
 from config.settings import SHOP_ID
 from api.rank_api import RankAPI, RankType
+from api.task_api import TaskAPI, TaskType
+
 
 
 @pytest.mark.smoke
@@ -68,6 +70,13 @@ def test_smoke_all(game_client):
     ranking_list, mine_rank, mine_score = rank.get_ranking_info(RankType.HERO_ALL)
     print(f"战舰榜共 {len(ranking_list)} 名玩家，我的排名: {mine_rank}")
     assert len(ranking_list) > 0, "排行榜为空"
+
+    # 7. 任务查询
+    print("\n============ 7. 任务查询 ============")
+    task = TaskAPI(game_client)
+    daily_tasks, activity = task.get_task_list(TaskType.DAILY)
+    print(f"日常任务共 {len(daily_tasks)} 个，活跃度: {activity}")
+    assert len(daily_tasks) > 0, "日常任务列表为空"
 
 
     print("\n============ 冒烟测试全部通过 ============")
