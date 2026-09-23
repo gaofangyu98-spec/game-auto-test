@@ -22,17 +22,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r game-auto-test/requirements.txt
 
       - name: Syntax check
         run: |
-          python -m py_compile api/*.py client/*.py config/*.py tests/*.py
+          python -m py_compile game-auto-test/api/*.py game-auto-test/client/*.py game-auto-test/config/*.py game-auto-test/tests/*.py
 
       - name: Collect tests
         run: |
-          pytest --collect-only -q
+          cd game-auto-test && pytest --collect-only -q
 
-      # 成功通知：上面所有步骤都通过了才会跑这步
       - name: Feishu notify success
         if: success()
         run: |
@@ -41,11 +40,10 @@ jobs:
             -d '{
               "msg_type": "text",
               "content": {
-                "text": "✅ CI 构建成功\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n提交人：${{ shturl.cc/E8 }}\n耗时：${{ job.status }}"
+                "text": "✅ CI 构建成功\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n耗时：${{ job.status }}"
               }
             }'
 
-      # 失败通知：任意一步失败就会跑这步
       - name: Feishu notify failure
         if: failure()
         run: |
@@ -54,6 +52,6 @@ jobs:
             -d '{
               "msg_type": "text",
               "content": {
-                "text": "❌ CI 构建失败\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n提交人：${{ shturl.cc/E8 }}\n快去修！"
+                "text": "❌ CI 构建失败\n项目：游戏自动化测试\n分支：${{ github.ref_name }}\n快去修！"
               }
             }'
