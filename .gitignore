@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+
+# 测试产物
+reports/*.log
+reports/*.txt
+.pytest_cache/
+
+# 环境配置（含账号密码，不提交）
+.env
+config/local_settings.py
+
+# OS
+Thumbs.db
+.DS_Store
