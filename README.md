@@ -2,6 +2,17 @@
 
 游戏协议自动化测试框架。基于 HTTP 登录 + WebSocket 长连接 + Protobuf 二进制协议，封装游戏客户端完整通信层，用 PyTest 组织背包、商店、邮件、角色、活动等核心业务模块的回归用例，替代游戏版本测试中重复的手工协议验证工作。
 
+## 核心亮点
+
+| 亮点 | 说明 |
+|---|---|
+| 自研协议通信层 | 复刻服务端 Go 源码的消息 ID 哈希算法，实现 [4 字节大端 ID + Protobuf] 二进制封包拆包 |
+| 精准消息等待 | recv_until 自动跳过心跳 / 同步推送 / S2C_ERROR，精确匹配期望响应，双保险防死循环（max_retry + total_timeout） |
+| 四步模板封装 | BaseAPI 统一"构造→发送→收响应→解码"，业务 API 只填 Protobuf 字段，消除重复样板代码 |
+| 登录态复用 | session 级 fixture 一次登录，全部用例共享同一条 WebSocket 连接，冒烟测试从 8s 优化到 1.5s |
+| 冒烟测试集合 | 一次登录串联 7 个核心模块，pytest -m smoke 一键跑，可直接接 CI/CD |
+| 硬断言覆盖 | 每个用例都有字段级断言（ID 合法性、非空、时间校验、删除验证、购买前后对比） |
+
 ---
 
 ## 一、项目背景
@@ -35,19 +46,19 @@ game-auto-test/
 ├── client/
 │   └── game_client.py   # 通信层：登录、WS 连接、鉴权、心跳、通用收发
 ├── api/                 # 业务层：每个游戏模块一个文件
-│   ├── base_api.py      # 基类：封装发请求→等响应→解码四步
-│   ├── bag_api.py       # 背包
-│   ├── shop_api.py      # 商店
-│   ├── mail_api.py      # 邮件
-│   ├── role_api.py      # 角色
-│   ├── activity_api.py  # 活动
-│   └── task_api.py      # 任务
+│   ├── base_api.py       # 基类：封装发请求→等响应→解码四步
+│   ├── bag_api.py        # 背包
+│   ├── shop_api.py       # 商店
+│   ├── mail_api.py       # 邮件
+│   ├── role_api.py       # 角色
+│   ├── activity_api.py   # 活动
+│   └── task_api.py       # 任务
 ├── proto/               # 协议层
 │   ├── *.proto          # 消息定义
 │   ├── *_pb2.py         # protoc 生成的 Python 类
 │   ├── proto_utils.py    # 封包/拆包：4 字节大端 ID + Protobuf 数据
 │   └── proto_hashmap.py # 消息名 → 消息 ID 映射表
-├── tests/               # 用例层：pytest 用例
+├── tests/               # 用例层：pytest 用例 + conftest fixture
 │   ├── test_login.py
 │   ├── test_bag.py
 │   ├── test_shop.py
@@ -64,6 +75,8 @@ game-auto-test/
 ```
 
 分层原则：业务用例（tests）只关心"我要查背包，期望返回什么"，不关心底层 WebSocket 怎么连、协议怎么封包、心跳怎么保。所有通信细节都封在 client 和 proto 层。
+
+调用链：tests/ → api/ → client/ → 游戏服务器。
 
 ---
 
@@ -134,7 +147,15 @@ game-auto-test/
 
 业务层只需要：new 一个 C2S_xxx、填字段、调 self.request(...)，不用写任何收发代码。新增一个业务接口就是在 api/ 下加个方法，十几行代码。
 
-### 5.3 心跳线程设计
+### 5.3 登录态复用（session 级 fixture）
+
+每个用例如果都自己登录一次，7 个用例要登 7 次，光登录就花 8 秒。
+
+conftest.py 里写了一个 session 级 fixture：整个 pytest 会话开始时登录一次，建立 WebSocket 连接，所有用例共享这同一条连接。跑完所有用例后 fixture 销毁，关闭连接、停心跳。
+
+优化后整个冒烟集合从 8 秒压到 1.5 秒。
+
+### 5.4 心跳线程设计
 
 - 用 daemon 线程：主程序退出时它自动结束，不会卡住进程
 - 睡眠拆成 1 秒粒度，而不是一次性 sleep N 秒：close() 时要能及时退出线程，1 秒粒度最多等 1 秒就发现 running=False
@@ -160,8 +181,11 @@ pip install -r requirements.txt
 # 跑全部用例
 pytest tests/ -s
 
+# 只跑冒烟用例（CI 推荐）
+pytest -m smoke
+
 # 跑单个模块
-pytest tests/test_shop.py -s
+pytest tests/test_shop.py -v
 
 # 只收集不执行（验证导入是否正确）
 pytest --collect-only -q
@@ -169,16 +193,28 @@ pytest --collect-only -q
 
 ## 九、用例覆盖
 
-| 模块 | 用例 | 校验点 |
+### 冒烟用例（pytest -m smoke，只查不改，可反复跑）
+
+| 模块 | 用例 | 断言点 |
 |---|---|---|
-| 登录 | test_login | 登录成功、WebSocket 连接建立 |
-| 背包 | test_query_backpack | 背包返回正常 |
-| 商店 | test_query_shop | code=0，商品列表非空 |
-| 商店购买 | test_buy_gift / test_buy_and_check_backpack | code=0，买前买后背包道具数量变化对得上 |
-| 邮件 | test_query_mail / test_get_attachments / test_delete_mail | 删除后邮件不在列表，附件领取后状态正确 |
-| 角色 | test_query_role_info | 角色信息返回正常 |
-| 药草栽培 | test_query_steward_list / test_train_steward | 列表非空，训练后经验值增加 |
-| 活动 | test_query_activity / test_activity_time_check | 配表里的活动时间与服务器时间对拍 |
+| 登录 | test_login | cuid 非空、WebSocket 连接建立 |
+| 背包 | test_query_backpack | 背包非空、道具数量合法 |
+| 角色 | test_query_role_info | ID>0、名字非空、等级 / VIP 合法 |
+| 邮件 | test_query_mail | 邮件 ID>0、标题非空、创建时间合法 |
+| 商店 | test_query_shop | 商品列表非空 |
+| 活动 | test_query_activity | 活动 ID>0、开始时间 < 结束时间 |
+| 任务 | test_query_task | 任务类型匹配、任务 ID>0、进度 >=0 |
+
+### 操作类用例（写操作，单独跑，不进冒烟）
+
+| 模块 | 用例 | 断言点 |
+|---|---|---|
+| 商店 | test_buy_gift | 购买返回 code=0 |
+| 商店 | test_buy_and_check_backpack | 买前买后背包对比，道具到账 |
+| 邮件 | test_get_attachments | 领取后 is_item_got=True |
+| 邮件 | test_delete_mail | 删除后邮件不在剩余列表 |
+| 药草栽培 | test_train_steward | 训练后经验值增加 |
+| 活动 | test_activity_time_check | 配表时间 vs 服务器时间对拍 |
 
 ## 十、配置
 
@@ -229,4 +265,4 @@ pytest --collect-only -q
 - [ ] 多账号并发支持，满足简单压测需求
 - [ ] 用例数据隔离，每个写操作用例独立账号，避免用例之间互相污染状态
 - [ ] 协议版本自动同步：proto 文件更新后自动重新生成 _pb2.py
-- [ ] GitHub Actions CI，提交代码后自动跑冒烟用例并通知
+- [ ] GitHub Actions CI，提交代码后自动跑 pytest -m smoke 并通知
